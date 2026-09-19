@@ -196,3 +196,108 @@
     text-align: center;
   }
 }
+
+/* Mobile Safari safe-area: never exceed the small viewport height
+   (the 100vh URL-bar shrink makes hero/holodeck jitter while scrolling). */
+.hero-section,
+.holodeck-section {
+  min-height: 100svh;
+}
+
+/* Compacts: true phone fit (under 640px) */
+@media (max-width: 640px) {
+  .hero-content-wrapper {
+    padding: 92px 16px 28px;
+    gap: 24px;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.15rem, 9.5vw, 3.4rem);
+    letter-spacing: 0.001em;
+  }
+
+  .hero-subtext {
+    font-size: 1rem;
+  }
+
+  .hero-cta-row {
+    width: 100%;
+  }
+
+  .hero-cta-row a {
+    flex: 1;
+    min-width: 140px;
+    padding: 13px 18px;
+  }
+
+  .hero-kicker {
+    font-size: 0.66rem;
+  }
+
+  .hero-price-display {
+    font-size: 1.15rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-desc {
+    font-size: 0.98rem;
+  }
+
+  .holo-canvas-frame {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .holo-controls-row {
+    gap: 14px;
+  }
+
+  .holo-car-selector {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .holo-car-btn {
+    flex: none;
+    padding: 9px 14px;
+  }
+
+  .arena-selectors-grid {
+    gap: 14px;
+  }
+
+  .tachometer-instrument-cluster {
+    transform: scale(0.78);
+  }
+
+  .vs-emblem {
+    margin: -14px 0;
+  }
+
+  .modal-actions-row {
+    flex-direction: column;
+  }
+
+  .modal-actions-row .btn-primary-glow,
+  .modal-actions-row .btn-secondary-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hud-stat-val {
+    font-size: 0.92rem;
+  }
+
+  .app-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    text-align: center;
+  }
+}

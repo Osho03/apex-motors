@@ -264,6 +264,7 @@ function CompareCard({ car, label }: { car: Hypercar; label: string }) {
         src={car.images.studio || car.images.hero}
         alt={car.name}
         className="compare-car-thumb"
+        loading="lazy"
       />
       <h3 className="compare-car-title">{car.name}</h3>
       <p className="compare-car-engine">{car.engineDesc}</p>

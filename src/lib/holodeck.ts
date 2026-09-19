@@ -84,6 +84,7 @@ export class ThreeDStage {
   private clock = new THREE.Clock();
   private rafId: number | null = null;
   private ro: ResizeObserver | null = null;
+  private isMobile = false;
 
   private bodyMat!: THREE.MeshPhysicalMaterial;
   private caliperMat!: THREE.MeshStandardMaterial;
@@ -103,6 +104,10 @@ export class ThreeDStage {
   }
 
   init() {
+    this.isMobile =
+      window.innerWidth < 768 ||
+      (window.matchMedia("(pointer: coarse)").matches && window.innerWidth < 1024);
+
     try {
       this.initRenderer();
     } catch (err) {
@@ -138,10 +143,12 @@ export class ThreeDStage {
   private initRenderer() {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
+      antialias: !this.isMobile,
       powerPreference: "high-performance",
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio || 1, this.isMobile ? 1.5 : 2)
+    );
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.12;
   }
@@ -193,11 +200,12 @@ export class ThreeDStage {
   }
 
   private buildStage() {
+    const reflRes = this.isMobile ? 512 : 1024;
     const floor = new Reflector(new THREE.PlaneGeometry(18, 18), {
       clipBias: 0.003,
       color: 0x07090f,
-      textureWidth: 1024,
-      textureHeight: 1024,
+      textureWidth: reflRes,
+      textureHeight: reflRes,
     });
     floor.rotation.x = -Math.PI / 2;
     this.scene.add(floor);
@@ -539,6 +547,8 @@ export class ThreeDStage {
   private animate() {
     const loop = () => {
       this.rafId = requestAnimationFrame(loop);
+
+      if (this.paused) return;
 
       const dt = Math.min(0.05, this.clock.getDelta());
       const t = this.clock.elapsedTime;

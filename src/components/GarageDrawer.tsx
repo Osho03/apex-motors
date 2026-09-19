@@ -91,6 +91,7 @@ export default function GarageDrawer() {
                 src={car.images.studio || car.images.hero}
                 alt={car.name}
                 className="garage-item-img"
+                loading="lazy"
               />
               <div className="garage-item-info">
                 <h4>{car.name}</h4>

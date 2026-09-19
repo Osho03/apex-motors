@@ -61,6 +61,10 @@ body {
   min-height: 100vh;
   position: relative;
   line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Custom Scrollbar */

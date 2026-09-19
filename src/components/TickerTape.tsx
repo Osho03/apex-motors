@@ -33,14 +33,28 @@ export default function TickerTape() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let x = 0;
     let skew = 0;
     let raf = 0;
+    let inView = true;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inView = entry?.isIntersecting ?? true;
+      },
+      { threshold: 0 }
+    );
+    io.observe(track);
 
     const half = () => track.scrollWidth / 2 || 1;
 
     const tick = () => {
+      if (!inView || document.hidden) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
       const v = velRef.current;
       // direction-aware speed boost from scroll velocity
       const boost = gsap.utils.clamp(-260, 260, v * 14);
@@ -56,7 +70,10 @@ export default function TickerTape() {
     };
 
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+    };
   }, []);
 
   // Build one long string of specs, duplicated 2x for seamless wrap
