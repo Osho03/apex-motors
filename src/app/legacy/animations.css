@@ -1,0 +1,78 @@
+/**
+ * APEX MOTORS // DYNAMIC KEYFRAMES & MICRO-ANIMATIONS
+ */
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(93, 191, 202, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(93, 191, 202, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(93, 191, 202, 0);
+  }
+}
+
+@keyframes laser-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hud-scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes redline-glow {
+  0% {
+    box-shadow: 0 0 10px rgba(200, 90, 112, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(200, 90, 112, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(200, 90, 112, 0.25);
+  }
+}
+
+.launch-glow-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-launch-control:hover .launch-glow-pulse {
+  opacity: 1;
+  animation: pulse-glow 1.5s infinite;
+}
+
+/* Stage Lighting Shimmer */
+.studio-glow-overlay {
+  animation: float-gentle 6s ease-in-out infinite;
+}

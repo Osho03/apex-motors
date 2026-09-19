@@ -1,0 +1,811 @@
+/* ====================================================
+   APEX MOTORS // ELEVATION LAYER (Next.js)
+   Loaded after legacy CSS so these win the cascade.
+==================================================== */
+
+/* --- Lenis smooth scroll --- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Override legacy `scroll-behavior: smooth` (conflicts with Lenis) */
+html {
+  scroll-behavior: auto !important;
+}
+
+/* --- Hero elevation: slogan + cinematic backdrop --- */
+.hero-slogan {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.6vw, 2.9rem);
+  line-height: 1.15;
+  color: rgba(245, 246, 247, 0.92);
+  max-width: 620px;
+  margin-bottom: 26px;
+  letter-spacing: 0.01em;
+  text-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.hero-slogan .slogan-accent {
+  font-style: italic;
+  background: linear-gradient(120deg, var(--accent-cyan) 0%, #9fd8df 45%, var(--accent-amber) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-slogan-line {
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+  margin: 0 0 14px;
+}
+
+/* Warp canvas visible at low opacity behind the hero image for depth */
+.hero-warp-canvas {
+  opacity: 0.28 !important;
+  mix-blend-mode: screen;
+}
+
+.hero-section.is-launching .hero-warp-canvas {
+  opacity: 0.9 !important;
+}
+
+.hero-section.is-launching .hero-bg-img {
+  filter: saturate(1.25) contrast(1.1) brightness(1.08);
+}
+
+/* Slight cinematic vignette overlay on top of scrim */
+.hero-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    radial-gradient(120% 90% at 20% 15%, transparent 30%, rgba(5, 6, 6, 0.28) 100%),
+    linear-gradient(180deg, transparent 55%, rgba(5, 6, 6, 0.85) 100%);
+  pointer-events: none;
+}
+
+/* Kicker with hairline flourish */
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-kicker::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: var(--accent-cyan);
+  flex: none;
+}
+
+/* Footer brand quick-links hover */
+.footer-links-col a {
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.footer-links-col a:hover {
+  color: var(--accent-cyan);
+  padding-left: 4px;
+}
+
+/* Select dropdowns on dark surfaces */
+select option {
+  background: #101013;
+  color: #f5f6f7;
+}
+
+/* Smooth-appear for roster cards when filtered */
+.roster-cards-grid .supercar-card {
+  animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .launch-glow-pulse,
+  .live-dot,
+  .hotspot-pulse {
+    animation: none !important;
+  }
+}
+/* ====================================================
+   VIP CONSULTATION MODAL (Next.js refresh)
+==================================================== */
+.vip-modal {
+  max-width: 980px;
+  background: var(--bg-surface-elevated);
+}
+
+.vip-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  max-height: 86vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- Left: private-office panel --- */
+.vip-aside {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 40px 34px;
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(93, 191, 202, 0.16), transparent 55%),
+    linear-gradient(165deg, rgba(10, 12, 18, 0.9), rgba(18, 20, 28, 0.96));
+  border-right: 1px solid var(--border-subtle);
+}
+
+.vip-aside::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(93, 191, 202, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(93, 191, 202, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.vip-aside-emblem {
+  color: var(--accent-red);
+  font-size: 1.4rem;
+  text-shadow: 0 0 22px rgba(200, 90, 112, 0.5);
+}
+
+.vip-aside-title {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  position: relative;
+  z-index: 1;
+}
+
+.vip-aside-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.vip-aside-list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.vip-aside-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px rgba(93, 191, 202, 0.8);
+}
+
+.vip-aside-spacer {
+  flex: 1;
+}
+
+.vip-aside-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.vip-aside-meta span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: var(--text-tertiary);
+}
+
+/* --- Right: form panel --- */
+.vip-form-side {
+  padding: 40px 44px;
+  align-self: center;
+}
+
+.vip-form-side .vip-modal-title {
+  margin-top: 4px;
+}
+
+.vip-form-side .vip-modal-desc {
+  margin-bottom: 26px;
+}
+
+.vip-form .btn-primary-glow[disabled] {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.opt-tag {
+  font-size: 0.58rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.14em;
+  margin-left: 6px;
+}
+
+.vip-form-error {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-red);
+  border: 1px solid var(--border-active);
+  background: rgba(200, 90, 112, 0.08);
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+/* --- Success state --- */
+.vip-success {
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  padding: 20px 0;
+}
+
+.vip-success-mark {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  color: #0b1215;
+  background: var(--accent-green);
+  box-shadow: 0 0 40px rgba(103, 189, 139, 0.55);
+  margin-bottom: 18px;
+}
+
+.vip-success .vip-modal-desc {
+  max-width: 360px;
+  margin-bottom: 26px;
+}
+
+/* ====================================================
+   THEME SYSTEM (DARK / LIGHT)
+==================================================== */
+body.apex-light-theme {
+  --bg-main: #f3f4f6;
+  --bg-surface: #ffffff;
+  --bg-surface-glass: rgba(255, 255, 255, 0.82);
+  --bg-surface-elevated: #ffffff;
+
+  --text-primary: #15171c;
+  --text-secondary: #41474f;
+  --text-tertiary: #6a7078;
+  --text-dim: #9aa0a8;
+
+  --border-subtle: rgba(13, 19, 33, 0.12);
+  --border-glow: rgba(93, 191, 202, 0.4);
+  --border-active: rgba(200, 90, 112, 0.45);
+  --hairline: rgba(13, 19, 33, 0.14);
+}
+
+body.apex-light-theme {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(93, 191, 202, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 100% 50%, rgba(200, 90, 112, 0.04) 0%, transparent 50%);
+}
+
+body.apex-light-theme ::-webkit-scrollbar-thumb {
+  background: rgba(13, 19, 33, 0.22);
+}
+
+body.apex-light-theme .site-header.scrolled {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+body.apex-light-theme .ticker-tape {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(238, 242, 246, 0.85), rgba(255, 255, 255, 0.92));
+}
+
+body.apex-light-theme .detail-modal,
+body.apex-light-theme .vip-modal {
+  background: var(--bg-surface-elevated);
+  box-shadow: 0 30px 80px rgba(13, 19, 33, 0.28);
+}
+
+body.apex-light-theme .garage-drawer {
+  background: var(--bg-surface-elevated);
+  box-shadow: -20px 0 50px rgba(13, 19, 33, 0.2);
+}
+
+body.apex-light-theme .vip-aside {
+  background:
+    radial-gradient(120% 90% at 15% 0%, rgba(93, 191, 202, 0.2), transparent 55%),
+    linear-gradient(165deg, #eef2f6, #f7f9fb);
+}
+
+body.apex-light-theme .form-group input,
+body.apex-light-theme .form-group select,
+body.apex-light-theme .form-group textarea,
+body.apex-light-theme .arena-select-box,
+body.apex-light-theme .chamber-engine-select,
+body.apex-light-theme .studio-select-input {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+body.apex-light-theme select option {
+  background: #ffffff;
+  color: #15171c;
+}
+
+body.apex-light-theme .hotspot-dot {
+  background: var(--bg-surface);
+}
+
+body.apex-light-theme .btn-garage-hud,
+body.apex-light-theme .theme-toggle-btn {
+  background: rgba(13, 19, 33, 0.05);
+}
+
+body.apex-light-theme .btn-garage-hud:hover,
+body.apex-light-theme .theme-toggle-btn:hover {
+  background: rgba(13, 19, 33, 0.1);
+}
+
+body.apex-light-theme .brand-badge {
+  background: rgba(13, 19, 33, 0.05);
+}
+
+/* The holodeck viewport, hero runway & footer stay cinematic in both themes */
+body.apex-light-theme .holo-canvas-frame {
+  background: #04060a;
+  border-color: rgba(13, 19, 33, 0.16);
+}
+
+/* Smooth color cross-fade while a theme change is animating */
+body.theme-anim,
+body.theme-anim * {
+  transition: background-color 0.55s ease, border-color 0.55s ease,
+    color 0.55s ease, box-shadow 0.55s ease !important;
+}
+
+/* --- Theme toggle (header) --- */
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  flex: none;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-toggle-btn .icon-moon {
+  display: none;
+}
+body.apex-light-theme .theme-toggle-btn .icon-sun {
+  display: none;
+}
+body.apex-light-theme .theme-toggle-btn .icon-moon {
+  display: block;
+}
+
+/* ====================================================
+   MOTION ELEVATION LAYER II
+   Preloader / Ticker Tape / Scroll Progress / Cursor Glow
+==================================================== */
+
+/* --- Preloader lock --- */
+body.preloader-lock {
+  overflow: hidden;
+}
+
+/* --- Preloader --- */
+.preloader-root {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.preloader-panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50.5%;
+  background: #050606;
+}
+.preloader-panel-top { top: 0; }
+.preloader-panel-bottom { bottom: 0; }
+
+.preloader-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.preloader-emblem {
+  font-size: 1.6rem;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 24px rgba(93, 191, 202, 0.8);
+  animation: emblemPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes emblemPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+.preloader-brand {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  letter-spacing: 0.16em;
+  color: #f5f6f7;
+}
+.preloader-brand-accent {
+  color: var(--accent-cyan);
+  font-weight: 300;
+}
+
+.preloader-phase {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.4em;
+  color: rgba(245, 246, 247, 0.5);
+  min-height: 1.2em;
+}
+
+.preloader-track {
+  width: min(380px, 72vw);
+  height: 2px;
+  background: rgba(245, 246, 247, 0.12);
+  overflow: hidden;
+  border-radius: 2px;
+}
+.preloader-bar {
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-amber));
+  box-shadow: 0 0 18px rgba(93, 191, 202, 0.7);
+}
+
+.preloader-meta {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+.preloader-pct {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  min-width: 3.2em;
+  text-align: left;
+}
+.preloader-stats {
+  display: flex;
+  gap: 22px;
+}
+.preloader-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.preloader-stat-val {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #f5f6f7;
+}
+.preloader-stat-lbl {
+  font-size: 0.56rem;
+  letter-spacing: 0.28em;
+  color: rgba(245, 246, 247, 0.4);
+}
+
+/* --- Split-title word masks --- */
+.section-title .word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.section-title .word-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* --- Ticker Tape divider --- */
+.ticker-tape {
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+  padding: 26px 0;
+  border-top: 1px solid rgba(93, 191, 202, 0.16);
+  border-bottom: 1px solid rgba(93, 191, 202, 0.16);
+  background:
+    linear-gradient(90deg, rgba(5, 6, 6, 0.92), rgba(10, 14, 16, 0.85), rgba(5, 6, 6, 0.92));
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.ticker-row {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 30px;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  color: rgba(245, 246, 247, 0.72);
+  text-transform: uppercase;
+}
+.ticker-diamond {
+  font-size: 0.6rem;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 12px rgba(93, 191, 202, 0.9);
+}
+
+/* --- Scroll progress hairline --- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 15000;
+  background: transparent;
+  pointer-events: none;
+}
+.scroll-progress-bar {
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-amber));
+  box-shadow: 0 0 14px rgba(93, 191, 202, 0.8);
+}
+
+/* --- Cursor glow --- */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  z-index: 14000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease, width 0.25s ease, height 0.25s ease,
+    border-color 0.25s ease, background 0.25s ease;
+  border: 1px solid rgba(93, 191, 202, 0.55);
+  background: radial-gradient(circle, rgba(93, 191, 202, 0.12), transparent 65%);
+  mix-blend-mode: screen;
+}
+.cursor-glow.is-visible { opacity: 1; }
+.cursor-glow.is-hot {
+  width: 58px;
+  height: 58px;
+  border-color: rgba(193, 154, 82, 0.8);
+  background: radial-gradient(circle, rgba(193, 154, 82, 0.16), transparent 65%);
+}
+
+/* --- Motion safety --- */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none !important; transform: none !important; }
+  .cursor-glow { display: none; }
+  .preloader-root { display: none; }
+}
+
+/* ====================================================
+   LIGHT MODE CONTRAST: always-dark zones
+   Hero runway, 3D holodeck viewport & footer stay
+   cinematic in every theme, so restore the dark text
+   palette inside them when the page is in light mode.
+==================================================== */
+body.apex-light-theme .hero-section,
+body.apex-light-theme .site-footer,
+body.apex-light-theme .holo-canvas-frame {
+  --text-primary: #f5f6f7;
+  --text-secondary: #a0a6ae;
+  --text-tertiary: #8b919b;
+  --text-dim: #6a7078;
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-glow: rgba(93, 191, 202, 0.25);
+  --hairline: rgba(255, 255, 255, 0.1);
+}
+
+/* Ticker ribbon reverses to a dark-on-light readout */
+body.apex-light-theme .ticker-item {
+  color: rgba(20, 25, 34, 0.78);
+}
+
+/* ====================================================
+   ELEVATED TYPOGRAPHY (Next.js pass)
+   Larger, more readable type across every major surface.
+==================================================== */
+
+/* Navigation */
+body .nav-link {
+  font-size: 0.85rem;
+}
+body .brand-badge {
+  font-size: 0.72rem;
+}
+body .btn-garage-hud {
+  font-size: 0.86rem;
+}
+body .btn-vip-concierge {
+  font-size: 0.85rem;
+}
+
+/* Hero runway */
+body .hero-kicker {
+  font-size: 0.88rem;
+  letter-spacing: 0.28em;
+}
+body .live-status-pill {
+  font-size: 0.78rem;
+}
+body .hero-headline {
+  font-size: clamp(3rem, 7vw, 5.6rem);
+}
+body .hero-subtext {
+  font-size: 1.24rem;
+}
+body .price-caption {
+  font-size: 0.76rem;
+}
+body .hero-price-display {
+  font-size: 1.55rem;
+}
+body .hud-stat-label {
+  font-size: 0.76rem;
+}
+body .hud-stat-val {
+  font-size: 1.24rem;
+}
+body .h-car-name {
+  font-size: 0.84rem;
+}
+body .h-car-hp {
+  font-size: 0.8rem;
+}
+
+/* Sections & cards */
+body .section-badge {
+  font-size: 0.82rem;
+}
+body .section-title {
+  font-size: clamp(2.2rem, 4.6vw, 3.5rem);
+}
+body .section-desc {
+  font-size: 1.16rem;
+}
+body .roster-filter-pill {
+  font-size: 0.86rem;
+}
+body .card-brand {
+  font-size: 0.82rem;
+}
+body .supercar-card .card-car-name {
+  font-size: 1.35rem;
+}
+body .arena-select-box {
+  font-size: 0.95rem;
+}
+body .chamber-engine-select {
+  font-size: 0.9rem;
+}
+
+/* Modals & forms */
+body .modal-car-name {
+  font-size: 2.3rem;
+}
+body .modal-tagline {
+  font-size: 1rem;
+}
+body .vip-modal-title {
+  font-size: 2rem;
+}
+body .vip-aside-title {
+  font-size: 1.8rem;
+}
+body .vip-modal-desc {
+  font-size: 0.98rem;
+}
+body .form-group label {
+  font-size: 0.8rem;
+}
+body .form-group input,
+body .form-group select,
+body .form-group textarea {
+  font-size: 1rem;
+}
+body .btn-primary-glow,
+body .btn-secondary-outline {
+  font-size: 0.9rem;
+}
+body .modal-close-btn {
+  width: 40px;
+  height: 40px;
+}
+
+/* Footer */
+body .footer-links-col h4 {
+  font-size: 0.88rem;
+}
+body .footer-links-col a,
+body .footer-links-col .location-text,
+body .footer-brand-desc {
+  font-size: 0.94rem;
+}

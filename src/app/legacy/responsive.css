@@ -1,0 +1,198 @@
+/**
+ * APEX MOTORS // RESPONSIVE ADAPTATIONS
+ */
+
+/* Tablets & Small Laptops (under 1024px) */
+@media (max-width: 1024px) {
+  .hero-main-showcase {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .studio-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-blueprint-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+}
+
+/* Mobile Devices (under 768px) */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none; /* In production mobile view, hidden in favor of direct actions */
+  }
+
+  .site-header {
+    padding: 12px 0;
+  }
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .section-container {
+    padding: 0 16px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .hero-content-wrapper {
+    padding: 104px 16px 32px;
+    gap: 28px;
+  }
+
+  .hero-main-showcase {
+    gap: 32px;
+  }
+
+  .hero-hud-dock {
+    padding: 16px;
+  }
+
+  .hud-telemetry-cluster {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hud-stat-box.wide {
+    grid-column: span 2;
+  }
+
+  .hero-roster-switcher {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hero-car-nav-btn {
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+
+  .sound-toggle-btn span {
+    display: none;
+  }
+
+  .arena-cards-row {
+    grid-template-columns: 1fr;
+  }
+
+  .arena-selectors-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .vs-emblem {
+    margin: -10px 0;
+  }
+
+  .tachometer-instrument-cluster {
+    transform: scale(0.9);
+  }
+
+  .garage-drawer {
+    width: 100vw;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-modal {
+    width: 95vw;
+  }
+
+  .vip-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vip-aside {
+    padding: 26px 24px;
+  }
+
+  .vip-aside-list {
+    display: none;
+  }
+
+  .vip-aside-spacer {
+    display: none;
+  }
+
+  .vip-aside-meta {
+    flex-direction: row;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .vip-form-side {
+    padding: 28px 22px;
+  }
+
+  .vip-success {
+    min-height: 320px;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .theme-toggle-btn,
+  .btn-garage-hud {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .btn-garage-hud span {
+    display: none;
+  }
+
+  .modal-scroll-body {
+    padding: 24px 16px;
+  }
+
+  .holo-canvas-frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .holo-hint-corner {
+    display: none;
+  }
+
+  .holo-hud-chip {
+    top: 10px;
+    left: 10px;
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
+
+  .holo-model-tag {
+    top: auto;
+    bottom: 12px;
+    right: 10px;
+  }
+
+  #holo-model-name {
+    font-size: 0.66rem;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
