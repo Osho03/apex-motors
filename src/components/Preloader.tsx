@@ -47,41 +47,41 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
 
       tl.to(counter, {
         v: 100,
-        duration: 2.2,
+        duration: 1.2,
         ease: "power2.inOut",
         onUpdate: () => setProgress(Math.round(counter.v)),
       })
         .to(
           barRef.current,
-          { scaleX: 1, duration: 2.2, ease: "power2.inOut" },
+          { scaleX: 1, duration: 1.2, ease: "power2.inOut" },
           0
         )
         // phase text flicker swaps
         .call(() => {
           if (phaseRef.current) phaseRef.current.textContent = PHASES[1];
-        }, [], 0.55)
+        }, [], 0.4)
         .call(() => {
           if (phaseRef.current) phaseRef.current.textContent = PHASES[2];
-        }, [], 1.1)
+        }, [], 0.78)
         .call(() => {
           if (phaseRef.current) phaseRef.current.textContent = PHASES[3];
-        }, [], 1.65)
+        }, [], 1.15)
         // content fades
         .to(".preloader-inner", {
           opacity: 0,
           y: -26,
-          duration: 0.5,
+          duration: 0.3,
           ease: "power2.in",
         })
         // curtain wipe: two panels slide apart
         .to(".preloader-panel-top", {
           yPercent: -100,
-          duration: 0.9,
+          duration: 0.6,
           ease: "power4.inOut",
         })
         .to(
           ".preloader-panel-bottom",
-          { yPercent: 100, duration: 0.9, ease: "power4.inOut" },
+          { yPercent: 100, duration: 0.6, ease: "power4.inOut" },
           "<"
         );
     }, rootRef);

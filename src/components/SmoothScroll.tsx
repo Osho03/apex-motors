@@ -63,6 +63,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         smoothWheel: true,
         wheelMultiplier: 1.0,
         touchMultiplier: 2.0,
+        syncTouch: true,
       }}
     >
       <ScrollTriggerSync />

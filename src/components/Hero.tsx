@@ -5,6 +5,12 @@ import { useApp } from "@/components/AppProvider";
 import { CARS_DATA, getHeroCars } from "@/lib/data";
 import { CanvasEffects } from "@/lib/canvasEffects";
 
+const HERO_IMG_SIZES = [480, 900, 1400, 1920];
+
+function heroSrcSet(url: string): string {
+  return HERO_IMG_SIZES.map((w) => `${url.replace(/w=\d+/, `w=${w}`)} ${w}w`).join(", ");
+}
+
 export default function Hero() {
   const { heroCarId, setHeroCarId } = useApp();
   const heroCars = getHeroCars();
@@ -23,9 +29,11 @@ export default function Hero() {
   const heroEngineRef = useRef<HTMLSpanElement | null>(null);
   const kickerRef = useRef<HTMLSpanElement | null>(null);
 
-  // Warp effect canvas
+  // Warp effect canvas (desktop only — phones skip it to stay at 60fps)
   useEffect(() => {
     if (!warpRef.current) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.innerWidth < 768) return;
     const effects = new CanvasEffects(warpRef.current);
     effectsRef.current = effects;
     return () => effects.destroy();
@@ -50,6 +58,7 @@ export default function Hero() {
       img.style.transform = "scale(0.96) translateY(20px)";
       setTimeout(() => {
         img.src = next.images.hero;
+        img.srcset = heroSrcSet(next.images.hero);
         img.alt = next.name;
         img.style.opacity = "1";
         img.style.transform = "scale(1) translateY(0px)";
@@ -69,8 +78,11 @@ export default function Hero() {
         <img
           ref={heroImageRef}
           src={car.images.hero}
+          srcSet={heroSrcSet(car.images.hero)}
+          sizes="100vw"
           alt={car.name}
           className="hero-bg-img"
+          decoding="async"
         />
         <div className="hero-scrim"></div>
       </div>

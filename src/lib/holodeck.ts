@@ -85,6 +85,7 @@ export class ThreeDStage {
   private rafId: number | null = null;
   private ro: ResizeObserver | null = null;
   private isMobile = false;
+  private frame = 0;
 
   private bodyMat!: THREE.MeshPhysicalMaterial;
   private caliperMat!: THREE.MeshStandardMaterial;
@@ -572,9 +573,14 @@ export class ThreeDStage {
 
       this.updateDust(dt);
 
-      if (this.visible && !document.hidden && !this.paused) {
-        this.controls.update();
-        this.renderer.render(this.scene, this.camera);
+      if (this.visible && !document.hidden) {
+        this.frame++;
+        // Phones render at half rate (30fps) — physics stay per-frame, only
+        // the expensive GL render is throttled for smooth experience.
+        if (this.frame % (this.isMobile ? 2 : 1) === 0) {
+          this.controls.update();
+          this.renderer.render(this.scene, this.camera);
+        }
       }
     };
     loop();
