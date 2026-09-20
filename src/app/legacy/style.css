@@ -276,7 +276,7 @@ section {
 .section-badge {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -290,7 +290,7 @@ section {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.005em;
@@ -301,7 +301,7 @@ section {
 
 .section-desc {
   color: var(--text-secondary);
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   line-height: 1.6;
 }
 
@@ -310,11 +310,11 @@ section {
   background: var(--accent-red);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 14px 28px;
+  padding: 16px 30px;
   border-radius: 0;
   font-family: var(--font-mono);
   font-weight: 500;
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
@@ -330,11 +330,11 @@ section {
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  padding: 14px 28px;
+  padding: 16px 30px;
   border-radius: 0;
   font-family: var(--font-mono);
   font-weight: 500;
-  font-size: 0.84rem;
+  font-size: 0.9rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
@@ -476,7 +476,7 @@ section {
 
 .hero-kicker {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -487,7 +487,7 @@ section {
 
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.002em;
@@ -498,10 +498,10 @@ section {
 }
 
 .hero-subtext {
-  font-size: 1.12rem;
+  font-size: 1.15rem;
   font-weight: 300;
   color: var(--text-secondary);
-  max-width: 520px;
+  max-width: 560px;
   margin-bottom: 26px;
 }
 
@@ -523,7 +523,7 @@ section {
 
 .hero-price-display {
   font-family: var(--font-mono);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 300;
   letter-spacing: 0.06em;
   color: var(--text-primary);
@@ -579,7 +579,7 @@ a.btn-secondary-outline {
 .hud-stat-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.7rem;
   color: var(--text-tertiary);
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -588,7 +588,7 @@ a.btn-secondary-outline {
 
 .hud-stat-val {
   font-family: var(--font-mono);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--text-primary);
@@ -1135,8 +1135,9 @@ a.btn-secondary-outline {
 
 .roster-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 36px);
+  width: 100%;
   margin-top: 40px;
 }
 
@@ -1150,7 +1151,7 @@ a.btn-secondary-outline {
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  padding: 22px;
+  padding: 24px;
   transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
   transform-style: preserve-3d;
   position: relative;
@@ -1171,7 +1172,7 @@ a.btn-secondary-outline {
 
 .card-brand {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: var(--accent-cyan);
   letter-spacing: 0.15em;
   font-weight: 700;
@@ -1192,21 +1193,22 @@ a.btn-secondary-outline {
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  height: 190px;
-  margin-bottom: 16px;
+  height: clamp(280px, 25vw, 360px);
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .card-car-img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center 55%;
   border-radius: 8px;
   position: relative;
   z-index: 2;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.9));
 }
 
 .card-glow-halo {
@@ -1221,14 +1223,14 @@ a.btn-secondary-outline {
 
 .card-car-name {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: clamp(1.5rem, 2vw, 2.1rem);
   font-weight: 700;
   line-height: 1.25;
   margin-bottom: 6px;
 }
 
 .card-car-engine {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   margin-bottom: 16px;
   white-space: nowrap;
@@ -1239,11 +1241,11 @@ a.btn-secondary-outline {
 .card-specs-matrix {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 18px;
 }
 
@@ -1254,13 +1256,13 @@ a.btn-secondary-outline {
 .spec-lbl {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   color: var(--text-tertiary);
 }
 
 .spec-val {
   font-family: var(--font-mono);
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -1275,7 +1277,7 @@ a.btn-secondary-outline {
 
 .card-price-value {
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent-amber);
 }
@@ -1287,10 +1289,11 @@ a.btn-secondary-outline {
   background: rgba(93, 191, 202, 0.08);
   border: 1px solid rgba(93, 191, 202, 0.3);
   color: var(--accent-cyan);
-  padding: 6px 12px;
+  padding: 12px 20px;
+  min-height: 48px;
   border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   cursor: pointer;
@@ -1681,7 +1684,7 @@ input:checked + .slider:before {
 .selector-box label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-tertiary);
   letter-spacing: 0.12em;
   margin-bottom: 6px;
@@ -1692,10 +1695,10 @@ input:checked + .slider:before {
   background: #090a0f;
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  padding: 10px 14px;
+  padding: 12px 14px;
   border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   outline: none;
 }
 
@@ -1737,27 +1740,27 @@ input:checked + .slider:before {
 
 .compare-car-thumb {
   width: 100%;
-  height: 170px;
+  height: 220px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .compare-car-title {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 4px;
 }
 
 .compare-car-engine {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
 .compare-price-tag {
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--accent-amber);
 }
@@ -1769,7 +1772,7 @@ input:checked + .slider:before {
 
 .hud-block-title {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   letter-spacing: 0.14em;
   margin-bottom: 20px;
@@ -1786,7 +1789,7 @@ input:checked + .slider:before {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  padding: 12px 18px;
+  padding: 14px 18px;
 }
 
 .metric-header {
@@ -1795,7 +1798,7 @@ input:checked + .slider:before {
   align-items: center;
   margin-bottom: 8px;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .val-a {
@@ -2022,7 +2025,7 @@ input:checked + .slider:before {
   gap: 14px;
   margin-bottom: 30px;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
@@ -2030,10 +2033,10 @@ input:checked + .slider:before {
   background: #090a0f;
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  padding: 8px 16px;
+  padding: 10px 16px;
   border-radius: 6px;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   outline: none;
 }
 
@@ -2139,14 +2142,14 @@ input:checked + .slider:before {
 
 #rev-chamber-rpm-val {
   font-family: var(--font-mono);
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .center-rpm-label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--accent-cyan);
   letter-spacing: 0.1em;
 }
@@ -2206,7 +2209,7 @@ input:checked + .slider:before {
 
 .pedal-title {
   font-family: var(--font-mono);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   margin-top: 4px;
@@ -2214,14 +2217,14 @@ input:checked + .slider:before {
 
 .pedal-sub {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   color: var(--accent-red);
   letter-spacing: 0.06em;
 }
 
 .pedal-instructions {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--text-tertiary);
   margin-top: 14px;
 }
@@ -2233,14 +2236,15 @@ input:checked + .slider:before {
   margin: 0 auto;
   margin-top: 18px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
-  padding: 9px 18px;
+  padding: 12px 22px;
+  min-height: 48px;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
@@ -2349,7 +2353,7 @@ input:checked + .slider:before {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   color: var(--accent-cyan);
   background: rgba(0, 0, 0, 0.45);
@@ -2389,13 +2393,13 @@ input:checked + .slider:before {
 #holo-model-name {
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
 }
 
 #holo-model-stat {
   color: var(--accent-amber);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   margin-top: 2px;
 }
 
@@ -2451,7 +2455,7 @@ input:checked + .slider:before {
 .hc-name {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -2459,7 +2463,7 @@ input:checked + .slider:before {
 .hc-hp {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   color: var(--text-tertiary);
 }
 
@@ -2468,7 +2472,7 @@ input:checked + .slider:before {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   letter-spacing: 0.12em;
   color: var(--text-secondary);
   cursor: pointer;
@@ -2503,14 +2507,15 @@ input:checked + .slider:before {
 
 .footer-brand-desc {
   color: var(--text-tertiary);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
   margin-top: 14px;
   max-width: 340px;
 }
 
 .footer-links-col h4 {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-primary);
   letter-spacing: 0.12em;
   margin-bottom: 18px;
@@ -2520,7 +2525,7 @@ input:checked + .slider:before {
   display: block;
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   margin-bottom: 10px;
   transition: color 0.2s;
 }
@@ -2768,13 +2773,14 @@ input:checked + .slider:before {
 
 .vip-modal-title {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin: 10px 0 6px;
 }
 
 .vip-modal-desc {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 1rem;
+  line-height: 1.6;
   margin-bottom: 24px;
 }
 

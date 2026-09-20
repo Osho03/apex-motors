@@ -138,7 +138,7 @@ function SupercarCard({
             width={640}
             height={380}
             quality={80}
-            sizes="(max-width: 768px) calc(100vw - 76px), (max-width: 1280px) 33vw, 400px"
+            sizes="(max-width: 767px) 94vw, (max-width: 1280px) 50vw, 640px"
           />
           <div
             className="card-glow-halo"
