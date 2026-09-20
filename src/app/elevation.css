@@ -1776,7 +1776,7 @@ body .footer-brand-desc {
 .mobile-menu-toggle.is-open span:last-child { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* Mobile: hide VIP text, keep icon buttons only */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .nav-actions > .btn-vip-concierge { display: none; }
   .nav-actions > .btn-garage-hud > span:not(.garage-count-badge) { display: none; }
   .nav-actions > .btn-garage-hud { width: 40px; padding: 0; justify-content: center; }
@@ -1939,7 +1939,7 @@ button {
    Loaded last, so it wins the cascade for the whole mobile
    experience. Desktop (> 767px) is untouched.
 ==================================================== */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   /* ---------- GLOBAL: no horizontal overflow, viewport widths ---------- */
   html,
   body {
@@ -2000,27 +2000,32 @@ button {
     padding-top: calc(88px + env(safe-area-inset-top));
   }
   body .hero-headline {
-    font-size: clamp(2.47rem, 11.6vw, 2.82rem);
+    font-size: clamp(2.59rem, 13vw, 3.06rem);
     line-height: 1.02;
   }
   body .hero-slogan {
-    font-size: clamp(1.25rem, 6vw, 1.75rem);
+    font-size: clamp(1.4rem, 6.5vw, 1.9rem);
   }
   body .hero-subtext {
-    font-size: 0.94rem;
+    font-size: 0.95rem;
+    max-width: 22em;
   }
   body .hero-price-display {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
   .hero-cta-row {
     width: 100%;
     flex-wrap: wrap;
+    gap: 12px;
   }
   .hero-cta-row a {
-    flex: 1 1 auto;
+    flex: 1 1 100%;
     min-width: 0;
-    min-height: 48px;
-    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 15px 22px;
   }
   .hud-telemetry-cluster {
     grid-template-columns: 1fr 1fr;
@@ -2064,58 +2069,81 @@ button {
   }
   .holo-car-btn {
     flex: none;
-    min-height: 44px;
+    min-height: 48px;
   }
 
   /* ---------- FLEET / ROSTER: strict single column, no carousel ---------- */
   .roster-cards-grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow: visible !important;
-    gap: 24px;
-    margin: 32px 0 12px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    gap: 28px;
+    margin: 36px 0 16px;
     padding: 0;
-    scroll-snap-type: none !important;
+    scroll-snap-type: none;
   }
   .roster-cards-grid .supercar-card {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    flex: none !important;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    flex: none;
   }
   .roster-cards-grid .card-glass-shell {
     width: 100%;
     min-height: 0;
-    padding: 18px;
+    padding: 24px;
+    border-radius: 18px;
   }
   .roster-cards-grid .card-image-wrapper {
     width: 100%;
-    height: clamp(230px, 60vw, 280px);
-    margin-bottom: 16px;
+    height: clamp(260px, 68vw, 380px);
+    margin-bottom: 18px;
   }
   .roster-cards-grid .card-car-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+  .roster-cards-grid .card-info-content {
+    display: grid;
+    gap: 6px;
+  }
+  body .supercar-card .card-car-name {
+    font-size: clamp(1.6rem, 7vw, 1.75rem);
+    line-height: 1.15;
+  }
+  .roster-cards-grid .card-car-engine {
+    font-size: 1rem;
+    margin-bottom: 14px;
+  }
   .roster-cards-grid .card-specs-matrix {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+    padding: 14px;
+    gap: 12px;
   }
   .roster-cards-grid .spec-lbl {
-    font-size: 0.7rem;
+    font-size: 0.74rem;
   }
   .roster-cards-grid .spec-val {
-    font-size: 0.95rem;
+    font-size: 1.06rem;
   }
   .roster-cards-grid .card-footer-action {
-    gap: 12px;
+    gap: 14px;
+    padding-top: 16px;
+  }
+  .roster-cards-grid .card-price-value {
+    font-size: 1.4rem;
   }
   .roster-cards-grid .btn-card-explore {
     flex: 1;
+    min-height: 52px;
+    padding: 14px 18px;
+    font-size: 0.86rem;
+    justify-content: center;
   }
 
   /* ---------- BUTTONS & CONTROLS: 48px-class touch targets ---------- */
@@ -2152,6 +2180,12 @@ button {
   .section-header {
     margin-bottom: 34px;
   }
+  body .section-title {
+    font-size: clamp(2.1rem, 10vw, 2.5rem);
+  }
+  body .section-badge {
+    font-size: 0.75rem;
+  }
   body .section-desc {
     font-size: 1rem;
     line-height: 1.65;
@@ -2182,8 +2216,20 @@ button {
     gap: 14px;
     text-align: center;
   }
+  .arena-select-box {
+    font-size: 1rem;
+    min-height: 52px;
+    padding: 14px 16px;
+  }
+  .compare-car-thumb {
+    height: clamp(210px, 56vw, 280px);
+  }
+  .compare-car-box {
+    padding: 18px 16px;
+  }
   .vs-emblem {
     margin: 6px 0;
+    padding: 10px 0;
   }
   .telemetry-bar-row {
     padding: 10px 12px;

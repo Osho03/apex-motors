@@ -23,10 +23,10 @@
   }
 }
 
-/* Mobile Devices (under 768px) — structural only; the authoritative
+/* Mobile Devices (under 769px) — structural only; the authoritative
    mobile layout + typography lives in the single mobile layer in
    elevation.css (loaded later). */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .nav-menu {
     display: none; /* In production mobile view, hidden in favor of direct actions */
   }
@@ -199,9 +199,9 @@
   min-height: 100svh;
 }
 
-/* Tablet (768px–1023px): its own band. Keep the premium nav off the
+/* Tablet (769px–1023px): its own band. Keep the premium nav off the
    cramped tablet row, stack the arena contenders, keep fleet at 2-up. */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 769px) and (max-width: 1023px) {
   .nav-menu {
     display: none;
   }
