@@ -59,6 +59,23 @@ export default function Header() {
 
   return (
     <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
+      <div className="mobile-header-bar">
+        <a href="#hero-runway" className="mobile-brand" aria-label="APEX Motors home">
+          <span>◆</span><strong>APEX</strong>
+        </a>
+        <div className="mobile-header-actions">
+          <button type="button" aria-label="VIP consultation" onClick={() => setVipOpen(true)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.6 3.3-5.5 7.5-5.5s6.7 1.9 7.5 5.5"/></svg>
+          </button>
+          <button type="button" aria-label="Dream Garage" onClick={() => setDrawerOpen(true)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            {garageCount > 0 && <i>{garageCount}</i>}
+          </button>
+          <button className={`mobile-bmw-menu ${menuOpen ? "is-open" : ""}`} type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
       <div className="nav-container">
         <a href="#hero-runway" className="brand-logo">
           <span className="emblem-mark">◆</span>
@@ -148,6 +165,22 @@ export default function Header() {
           </button>
         </div>
       </div>
+      <nav className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`} aria-label="Mobile navigation">
+        <div className="mobile-panel-top">
+          <span>APEX MOTORS</span>
+          <button type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)}>×</button>
+        </div>
+        {NAV_LINKS.map((link, index) => (
+          <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+            <small>0{index + 1}</small>{link.label}
+          </a>
+        ))}
+        <div className="mobile-panel-footer">
+          <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>DREAM GARAGE</button>
+          <button type="button" onClick={() => { setMenuOpen(false); setVipOpen(true); }}>VIP CONSULTATION</button>
+          <ThemeToggle />
+        </div>
+      </nav>
       <button
         className={`mobile-menu-backdrop ${menuOpen ? "is-open" : ""}`}
         type="button"
