@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { AnimatePresence, motion } from "motion/react";
 import { useApp } from "@/components/AppProvider";
 import { CONTACT_FORM_ENDPOINT } from "@/lib/site-config";
 
@@ -83,40 +85,50 @@ export default function VipModal() {
   };
 
   return (
-    <>
-      <div
-        id="modal-backdrop"
-        className={`modal-backdrop ${vipOpen ? "open" : ""}`}
-        onClick={close}
-      ></div>
-      <div
-        id="vip-booking-modal"
-        className={`detail-modal vip-modal ${vipOpen ? "open" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Book a private consultation"
-      >
-        <button
-          id="close-vip-modal"
-          className="modal-close-btn"
-          type="button"
-          title="Close"
-          onClick={close}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+    <Dialog.Root open={vipOpen} onOpenChange={setVipOpen}>
+      <AnimatePresence>
+        {vipOpen && (
+          <Dialog.Portal forceMount>
+            <Dialog.Overlay asChild forceMount>
+              <motion.div
+                className="modal-backdrop open motion-host"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              />
+            </Dialog.Overlay>
+            <Dialog.Content asChild forceMount aria-describedby={undefined}>
+              <motion.div
+                id="vip-booking-modal"
+                className="detail-modal vip-modal open motion-host"
+                initial={{ opacity: 0, x: "-50%", y: "-46%", scale: 0.96 }}
+                animate={{ opacity: 1, x: "-50%", y: "-50%", scale: 1 }}
+                exit={{ opacity: 0, x: "-50%", y: "-46%", scale: 0.96 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Dialog.Close asChild>
+                  <button
+                    id="close-vip-modal"
+                    className="modal-close-btn"
+                    type="button"
+                    title="Close"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </Dialog.Close>
 
-        <div className="vip-layout">
+        <div className="vip-layout" data-lenis-prevent>
           <aside className="vip-aside">
             <div className="vip-aside-emblem">◆</div>
             <div className="section-badge">PRIVATE CONSULTANCY</div>
@@ -139,7 +151,9 @@ export default function VipModal() {
             {status === "success" ? (
               <div className="vip-success">
                 <div className="vip-success-mark">✓</div>
-                <h3 className="vip-modal-title">Request received</h3>
+                <Dialog.Title asChild>
+                  <h3 className="vip-modal-title">Request received</h3>
+                </Dialog.Title>
                 <p className="vip-modal-desc">
                   Our concierge will contact you within two hours to schedule your
                   consultation.
@@ -151,7 +165,9 @@ export default function VipModal() {
             ) : (
               <>
                 <div className="section-badge">BOOK A CONSULTATION</div>
-                <h2 className="vip-modal-title">Private consultation</h2>
+                <Dialog.Title asChild>
+                  <h2 className="vip-modal-title">Private consultation</h2>
+                </Dialog.Title>
                 <p className="vip-modal-desc">
                   Share your requirements. A dedicated concierge will respond within two hours.
                 </p>
@@ -246,7 +262,11 @@ export default function VipModal() {
             )}
           </div>
         </div>
-      </div>
-    </>
+              </motion.div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        )}
+      </AnimatePresence>
+    </Dialog.Root>
   );
 }

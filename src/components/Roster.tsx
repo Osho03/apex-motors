@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { useApp } from "@/components/AppProvider";
 import { CARS_DATA, CATEGORY_LABELS } from "@/lib/data";
 
@@ -42,10 +43,11 @@ export default function Roster() {
         </div>
 
         <div id="roster-cards-grid" className="roster-cards-grid">
-          {filtered.map((car) => (
+          {filtered.map((car, index) => (
             <SupercarCard
               key={car.id}
               car={car}
+              index={index}
               inGarage={hasCar(car.id)}
               onFav={() => toggleCar(car.id)}
               onExplore={() => openCarModal(car.id)}
@@ -59,11 +61,13 @@ export default function Roster() {
 
 function SupercarCard({
   car,
+  index,
   inGarage,
   onFav,
   onExplore,
 }: {
   car: (typeof CARS_DATA)[0];
+  index: number;
   inGarage: boolean;
   onFav: () => void;
   onExplore: () => void;
@@ -96,6 +100,7 @@ function SupercarCard({
     <div
       className="supercar-card"
       data-car-id={car.id}
+      style={{ "--i": index } as React.CSSProperties}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >
@@ -126,11 +131,14 @@ function SupercarCard({
         </div>
 
         <div className="card-image-wrapper">
-          <img
+          <Image
             src={car.images.studio || car.images.hero}
             alt={car.name}
             className="card-car-img"
-            loading="lazy"
+            width={640}
+            height={380}
+            quality={80}
+            sizes="(max-width: 768px) calc(100vw - 76px), (max-width: 1280px) 33vw, 400px"
           />
           <div
             className="card-glow-halo"

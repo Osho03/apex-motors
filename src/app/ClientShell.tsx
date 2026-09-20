@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { MotionConfig } from "motion/react";
 import { AppProvider } from "@/components/AppProvider";
 import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
@@ -22,8 +23,9 @@ export default function ClientShell({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppProvider>
-      <SmoothScroll>
+    <MotionConfig reducedMotion="user">
+      <AppProvider>
+        <SmoothScroll>
         <Preloader onDone={handleRevealed} />
         <ScrollProgress />
         <CursorGlow />
@@ -36,7 +38,8 @@ export default function ClientShell({ children }: { children: ReactNode }) {
         <GarageDrawer />
         <Toast />
         <HelpWidget />
-      </SmoothScroll>
-    </AppProvider>
+        </SmoothScroll>
+      </AppProvider>
+    </MotionConfig>
   );
 }

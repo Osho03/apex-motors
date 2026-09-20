@@ -1,15 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useApp } from "@/components/AppProvider";
 import { CARS_DATA, getHeroCars } from "@/lib/data";
 import { CanvasEffects } from "@/lib/canvasEffects";
-
-const HERO_IMG_SIZES = [480, 900, 1400, 1920];
-
-function heroSrcSet(url: string): string {
-  return HERO_IMG_SIZES.map((w) => `${url.replace(/w=\d+/, `w=${w}`)} ${w}w`).join(", ");
-}
 
 export default function Hero() {
   const { heroCarId, setHeroCarId } = useApp();
@@ -18,6 +13,9 @@ export default function Hero() {
 
   const warpRef = useRef<HTMLCanvasElement | null>(null);
   const effectsRef = useRef<CanvasEffects | null>(null);
+
+  // Hero backdrop image source; next/image re-optimizes each swap (AVIF/WebP).
+  const [heroImg, setHeroImg] = useState(car.images.hero);
 
   const heroTitleRef = useRef<HTMLHeadingElement | null>(null);
   const heroTaglineRef = useRef<HTMLParagraphElement | null>(null);
@@ -57,9 +55,7 @@ export default function Hero() {
       img.style.opacity = "0";
       img.style.transform = "scale(0.96) translateY(20px)";
       setTimeout(() => {
-        img.src = next.images.hero;
-        img.srcset = heroSrcSet(next.images.hero);
-        img.alt = next.name;
+        setHeroImg(next.images.hero);
         img.style.opacity = "1";
         img.style.transform = "scale(1) translateY(0px)";
       }, 150);
@@ -75,14 +71,15 @@ export default function Hero() {
     <section id="hero-runway" className="hero-section">
       <div className="hero-backdrop">
         <canvas ref={warpRef} className="hero-warp-canvas"></canvas>
-        <img
+        <Image
           ref={heroImageRef}
-          src={car.images.hero}
-          srcSet={heroSrcSet(car.images.hero)}
-          sizes="100vw"
+          src={heroImg}
           alt={car.name}
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
           className="hero-bg-img"
-          decoding="async"
         />
         <div className="hero-scrim"></div>
       </div>

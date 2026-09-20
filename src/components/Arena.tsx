@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { CARS_DATA } from "@/lib/data";
 import type { Hypercar } from "@/lib/types";
 
@@ -260,11 +261,14 @@ function CompareCard({ car, label }: { car: Hypercar; label: string }) {
   return (
     <div className="compare-car-box" style={{ "--accent-car": car.colors[0]?.accent || "#00f0ff" } as React.CSSProperties}>
       <div className="compare-badge-pill">CONTENDER {label}</div>
-      <img
+      <Image
         src={car.images.studio || car.images.hero}
         alt={car.name}
         className="compare-car-thumb"
-        loading="lazy"
+        width={640}
+        height={340}
+        quality={80}
+        sizes="(max-width: 768px) 90vw, 480px"
       />
       <h3 className="compare-car-title">{car.name}</h3>
       <p className="compare-car-engine">{car.engineDesc}</p>

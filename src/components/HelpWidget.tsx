@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { useApp } from "@/components/AppProvider";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 
@@ -29,6 +30,17 @@ const FAQS = [
 export default function HelpWidget() {
   const { setVipOpen } = useApp();
   const [open, setOpen] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowGreeting(true), 1800);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const togglePanel = () => {
+    if (!open) setShowGreeting(false);
+    setOpen(!open);
+  };
 
   const openMail = () => {
     const body = encodeURIComponent(
@@ -39,7 +51,17 @@ export default function HelpWidget() {
 
   return (
     <div className="help-widget">
-      <div className={`help-panel ${open ? "is-open" : ""}`} role="dialog" aria-label="Apex Motors VIP assistant">
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="help-panel is-open motion-host"
+            role="dialog"
+            aria-label="Apex Motors VIP assistant"
+            initial={{ opacity: 0, y: 14, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 14, scale: 0.96 }}
+            transition={{ duration: 0.26, ease: [0.22, 0.75, 0.2, 1] }}
+          >
         <div className="help-panel-head">
           <div className="help-panel-avatar" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -102,6 +124,29 @@ export default function HelpWidget() {
             OPEN VIP CONSULTATION
           </button>
         </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className={`help-greeting-bubble ${showGreeting && !open ? "is-visible" : ""}`} role="status">
+        <button
+          type="button"
+          className="help-greeting-dismiss"
+          aria-label="Dismiss"
+          onClick={() => setShowGreeting(false)}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+        <span className="help-greeting-text">Hello, how can we help?</span>
+        <button
+          type="button"
+          className="help-greeting-link"
+          onClick={() => { setOpen(true); setShowGreeting(false); }}
+        >
+          FAQ &amp; Contact
+        </button>
       </div>
 
       <button
@@ -109,7 +154,7 @@ export default function HelpWidget() {
         type="button"
         aria-label={open ? "Close help" : "Open help"}
         aria-expanded={open}
-        onClick={() => setOpen((value: boolean) => !value)}
+        onClick={togglePanel}
       >
         <svg className="fab-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
           <path d="M20 14a4 4 0 0 1-4 4H9l-5 3v-7a4 4 0 0 1-2-3.5V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />

@@ -1,10 +1,42 @@
 import type { Metadata } from "next";
+import { Unbounded, Manrope, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import "./legacy/style.css";
 import "./legacy/animations.css";
 import "./legacy/responsive.css";
 import "./elevation.css";
 import ClientShell from "./ClientShell";
+
+// Self-hosted via next/font (preloaded, zero layout shift, no external CSS round-trip).
+// Each exposes a CSS variable consumed by the theme in legacy/style.css.
+const fontDisplay = Unbounded({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-unbounded",
+  display: "swap",
+});
+
+const fontBody = Manrope({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const fontMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
+const fontQuote = Playfair_Display({
+  subsets: ["latin"],
+  weight: "500",
+  style: "italic",
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "APEX MOTORS | The World's Ultimate Hypercar Showcase & Experience",
@@ -14,15 +46,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} ${fontQuote.variable}`}
+    >
       <body className="apex-dark-theme">
         <ClientShell>{children}</ClientShell>
       </body>
