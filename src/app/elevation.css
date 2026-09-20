@@ -1055,25 +1055,45 @@ body .footer-brand-desc {
   .hc-name { font-size: 0.78rem; }
   .hc-hp { font-size: 0.72rem; }
 
-  /* One premium model per swipe, like an automotive product carousel. */
+  /* Horizontal swipe deck: one machine per pane, big imagery, snap-to-center. */
+  .roster-filters-bar {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 2px 4px 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .roster-filters-bar::-webkit-scrollbar { display: none; }
+
   .roster-cards-grid {
     display: flex;
-    gap: 14px;
-    margin: 28px -16px 0;
-    padding: 0 16px 16px;
+    gap: 18px;
+    margin: 8px -16px 0;
+    padding: 4px 16px 30px;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
 
   .roster-cards-grid::-webkit-scrollbar { display: none; }
   .roster-cards-grid .supercar-card {
-    flex: 0 0 calc(100vw - 46px);
+    flex: 0 0 calc(100vw - 76px);
+    min-width: 0;
     scroll-snap-align: center;
+    animation: none;
   }
-  .roster-cards-grid .card-glass-shell { min-height: 100%; }
-  .roster-cards-grid .card-image-wrapper { height: 235px; }
+  .roster-cards-grid .card-glass-shell { min-height: 0; padding: 20px; }
+  .roster-cards-grid .card-image-wrapper { height: clamp(210px, 46vw, 300px); margin-bottom: 18px; }
+  .roster-cards-grid .card-car-img {
+    filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.85));
+  }
+  .roster-cards-grid .card-specs-matrix { margin-bottom: 16px; }
+  .roster-cards-grid .card-footer-action { gap: 12px; }
+  .roster-cards-grid .btn-card-explore { min-height: 46px; }
 }
 
 /* The 3D surface remains cinematic in light mode, so all of its type needs
@@ -1095,46 +1115,297 @@ body .footer-brand-desc {
   color: var(--accent-cyan);
 }
 
-/* Floating assistance on every viewport, with a larger thumb target on phones. */
+/* ====================================================
+   ASSIST WIDGET (floating chat)
+==================================================== */
 .help-widget {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: 22px;
+  bottom: 22px;
   z-index: 16000;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 14px;
 }
 
+.help-panel {
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(68vh, 620px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 90% at 90% -10%, rgba(93, 191, 202, 0.14), transparent 55%),
+    linear-gradient(180deg, #0c0f16 0%, #08090d 100%);
+  color: #f5f6f7;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(93, 191, 202, 0.08);
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity 0.24s ease, transform 0.26s cubic-bezier(0.22, 0.75, 0.2, 1);
+}
+
+.help-panel.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.help-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 18px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.help-panel-avatar {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border: 1px solid rgba(93, 191, 202, 0.55);
+  border-radius: 50%;
+  background: rgba(93, 191, 202, 0.08);
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+
+.help-panel-avatar .status-dot {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #0b0d12;
+  border-radius: 50%;
+  background: var(--accent-green);
+}
+
+.help-panel-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.help-panel-title small {
+  display: block;
+  margin-top: 2px;
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+}
+
+.help-panel-close {
+  width: 38px;
+  height: 38px;
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+}
+
+.help-panel-close:active { transform: scale(0.94); }
+.help-panel-close svg { width: 17px; height: 17px; }
+
+.help-panel-body {
+  overflow-y: auto;
+  padding: 4px 18px 18px;
+  scrollbar-width: thin;
+}
+
+.help-panel-greeting {
+  margin: 16px 0 4px;
+  color: #aeb5be;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.help-panel-kicker {
+  display: block;
+  margin: 22px 0 10px;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+}
+
+.help-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.help-faq-item {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.help-faq-item summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+}
+
+.help-faq-item summary::-webkit-details-marker { display: none; }
+
+.help-faq-item summary::after {
+  content: "+";
+  margin-left: auto;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  transition: transform 0.2s ease;
+}
+
+.help-faq-item[open] summary::after { transform: rotate(45deg); }
+
+.help-faq-item p {
+  padding: 0 16px 14px;
+  color: #aeb5be;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.help-contact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.help-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  color: #f5f6f7;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.18s ease;
+}
+
+.help-contact-row:active { transform: scale(0.98); }
+
+.help-contact-row svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  color: var(--accent-cyan);
+}
+
+.help-contact-row span {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+.help-contact-cta {
+  min-height: 52px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(120deg, var(--accent-red), #d65a72);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.help-contact-cta:active { transform: scale(0.98); }
+
 .help-fab {
-  width: 60px;
-  height: 60px;
+  position: relative;
+  width: 62px;
+  height: 62px;
   display: grid;
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: #f8f9fa;
-  color: #14171c;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #10141c 0%, #0a0c12 60%);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(93, 191, 202, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.help-fab svg { width: 27px; height: 27px; }
-.help-actions { display: grid; gap: 8px; opacity: 0; visibility: hidden; transform: translateY(8px); transition: 0.2s ease; }
-.help-actions.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
-.help-actions button {
-  min-width: 104px;
-  min-height: 42px;
-  padding: 0 16px;
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 22px;
-  background: #11151b;
-  color: #f5f6f7;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.help-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(93, 191, 202, 0.6),
+    0 0 26px rgba(93, 191, 202, 0.35);
+}
+
+.help-fab:active { transform: scale(0.94); }
+
+.help-fab .fab-chat,
+.help-fab .fab-close {
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.help-fab .fab-chat { width: 27px; height: 27px; }
+.help-fab .fab-close {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.help-fab.is-open .fab-chat { opacity: 0; transform: scale(0.5); }
+.help-fab.is-open .fab-close { opacity: 1; transform: scale(1); }
+
+.help-fab::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(93, 191, 202, 0.55);
+  animation: fabPing 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.help-fab.is-open::after { animation: none; opacity: 0; }
+
+@keyframes fabPing {
+  0% { transform: scale(0.92); opacity: 0.9; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .help-fab::after { animation: none; opacity: 0; }
+  .help-panel { transition: none; }
+}
+
+@media (max-width: 768px) {
+  .help-widget { right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); }
+  .help-panel { width: calc(100vw - 32px); max-height: min(64vh, 560px); }
+  .help-fab { width: 68px; height: 68px; }
+  .help-fab .fab-chat { width: 30px; height: 30px; }
 }
 
 .help-faq-panel {
@@ -1196,24 +1467,9 @@ body .footer-brand-desc {
   .mobile-panel-footer > button { min-height: 48px; padding: 0 10px; border: 1px solid var(--border-subtle); background: transparent; color: #fff; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; }
   .mobile-panel-footer .theme-toggle-btn { width: 48px; height: 48px; }
 
-  /* Full-bleed vehicle stories: one car per panel, vertically swiped. */
-  .roster-cards-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 28px -16px 0; padding: 0; overflow: visible; }
-  .roster-cards-grid .supercar-card { width: 100%; min-height: min(760px, 96svh); }
-  .roster-cards-grid .card-glass-shell { position: relative; min-height: min(760px, 96svh); padding: 0; overflow: hidden; border: 0; border-radius: 0; background: #050506; }
-  .roster-cards-grid .card-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .roster-cards-grid .card-image-wrapper::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.08) 24%, rgba(0,0,0,.16) 46%, rgba(0,0,0,.92) 100%); }
-  .roster-cards-grid .card-car-img { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; filter: none; }
-  .roster-cards-grid .card-glow-halo { display: none; }
-  .roster-cards-grid .card-top-row { position: relative; z-index: 1; padding: 24px 22px; margin: 0; }
-  .roster-cards-grid .card-brand { color: #fff; font-size: .78rem; }
-  .roster-cards-grid .card-garage-fav-btn { color: #fff; }
-  .roster-cards-grid .card-info-content { position: relative; z-index: 1; display: flex; flex: 1; flex-direction: column; justify-content: flex-end; padding: 22px 24px 28px; color: #fff; }
-  .roster-cards-grid .card-car-name { margin-bottom: 8px; color: #fff; font-size: clamp(2.2rem, 10vw, 3.25rem); line-height: 1; }
-  .roster-cards-grid .card-car-engine { color: rgba(255,255,255,.88); font-size: 1rem; white-space: normal; }
-  .roster-cards-grid .card-specs-matrix { display: none; }
-  .roster-cards-grid .card-footer-action { display: grid; grid-template-columns: 1fr; gap: 15px; padding-top: 18px; }
-  .roster-cards-grid .card-price-value { color: #fff; font-size: 1.08rem; }
-  .roster-cards-grid .btn-card-explore { min-height: 54px; justify-content: center; border-color: rgba(255,255,255,.92); color: #fff; font-size: .84rem; }
+  /* Mobile fleet = horizontal swipe deck (snap-to-center, one car per pane). */
+  .roster-cards-grid { display: flex; overflow-x: auto; scroll-snap-type: x proximity; }
+  .roster-cards-grid .supercar-card { flex: 0 0 calc(100vw - 76px); scroll-snap-align: center; }
   .help-widget { right: 20px; bottom: 20px; }
   .help-fab { width: 76px; height: 76px; box-shadow: 0 12px 38px rgba(0,0,0,.42); }
   .help-fab svg { width: 33px; height: 33px; }

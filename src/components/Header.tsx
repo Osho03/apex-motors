@@ -167,18 +167,48 @@ export default function Header() {
       </div>
       <nav className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`} aria-label="Mobile navigation">
         <div className="mobile-panel-top">
-          <span>APEX MOTORS</span>
-          <button type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)}>×</button>
-        </div>
-        {NAV_LINKS.map((link, index) => (
-          <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
-            <small>0{index + 1}</small>{link.label}
+          <a href="#hero-runway" className="mobile-panel-brand" onClick={() => setMenuOpen(false)}>
+            <span>◆</span> APEX MOTORS
           </a>
-        ))}
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+        <p className="mobile-panel-caption">SELECT A DESTINATION</p>
+        <div className="mobile-panel-links">
+          {NAV_LINKS.map((link, index) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              style={{ "--i": index } as React.CSSProperties}
+            >
+              <small>0{index + 1}</small>
+              <strong>{link.label}</strong>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          ))}
+        </div>
         <div className="mobile-panel-footer">
-          <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>DREAM GARAGE</button>
-          <button type="button" onClick={() => { setMenuOpen(false); setVipOpen(true); }}>VIP CONSULTATION</button>
-          <ThemeToggle />
+          <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>
+            DREAM GARAGE{garageCount > 0 ? ` · ${garageCount}` : ""}
+          </button>
+          <button type="button" onClick={() => { setMenuOpen(false); setVipOpen(true); }}>
+            VIP CONSULTATION
+          </button>
+          <div className="mobile-panel-theme">
+            <span>DISPLAY</span>
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
       <button
