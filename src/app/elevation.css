@@ -1474,3 +1474,44 @@ body .footer-brand-desc {
   .help-fab { width: 76px; height: 76px; box-shadow: 0 12px 38px rgba(0,0,0,.42); }
   .help-fab svg { width: 33px; height: 33px; }
 }
+
+/* ====================================================
+   MOBILE READABILITY PUMP (Final cascade: wins everything above)
+   The site shipped with tiny 0.56–0.92rem accents on small screens.
+   This raises base + accents so every word is comfortably legible
+   on a phone, without reflowing the desktop layout.
+==================================================== */
+@media (max-width: 767px) {
+  html { font-size: 16.5px; }
+  body { font-size: 1.02rem; }
+  body p { line-height: 1.55; }
+  .mobile-panel-links > a { font-size: clamp(1.9rem, 8.5vw, 2.3rem); }
+  .mobile-panel-links > a small { font-size: 0.68rem; letter-spacing: 0.12em; }
+  .mobile-menu-label { font-size: 0.74rem; letter-spacing: 0.18em; }
+  .mobile-panel-footer > button { font-size: 0.72rem; letter-spacing: 0.08em; }
+  .section-badge { font-size: 0.8rem; letter-spacing: 0.16em; }
+  .section-desc { font-size: 1.12rem; line-height: 1.7; }
+  .card-brand { font-size: 0.82rem; }
+  .supercar-card .card-car-name { font-size: 1.6rem; }
+  .hud-stat-label { font-size: 0.82rem; }
+  .hud-stat-val { font-size: 1.12rem; line-height: 1.35; }
+  .h-car-name { font-size: 0.84rem; }
+  .h-car-hp { font-size: 0.8rem; }
+  .holo-hud-chip { font-size: 0.74rem; }
+  #holo-model-name { font-size: 0.8rem; }
+  #holo-model-stat { font-size: 0.72rem; }
+  .hc-name { font-size: 0.84rem; }
+  .hc-hp { font-size: 0.78rem; }
+  .help-panel-kicker { font-size: 0.74rem; letter-spacing: 0.16em; }
+  .help-faq-item summary { font-size: 0.98rem; }
+  .help-faq-item p { font-size: 0.94rem; line-height: 1.6; }
+  .help-panel-greeting { font-size: 1rem; line-height: 1.6; }
+  .help-contact-row { font-size: 0.82rem; }
+  .help-actions { font-size: 0.82rem; }
+  .roster-card .car-model-name { font-size: 1.05rem; }
+  .roster-card .roster-car-name { font-size: 0.8rem; }
+  .roster-card .roster-caption { font-size: 0.82rem; }
+  .btn-vip-concierge { font-size: 0.78rem; letter-spacing: 0.1em; }
+  .nav-actions .btn-garage-hud { font-size: 0.74rem; }
+  .garage-count-badge { font-size: 0.68rem; }
+}
