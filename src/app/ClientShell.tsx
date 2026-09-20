@@ -13,6 +13,7 @@ import CarModal from "@/components/CarModal";
 import VipModal from "@/components/VipModal";
 import GarageDrawer from "@/components/GarageDrawer";
 import Toast from "@/components/Toast";
+import HelpWidget from "@/components/HelpWidget";
 
 export default function ClientShell({ children }: { children: ReactNode }) {
   const handleRevealed = () => {
@@ -34,6 +35,7 @@ export default function ClientShell({ children }: { children: ReactNode }) {
         <VipModal />
         <GarageDrawer />
         <Toast />
+        <HelpWidget />
       </SmoothScroll>
     </AppProvider>
   );

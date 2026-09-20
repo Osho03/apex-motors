@@ -850,9 +850,14 @@ body .footer-brand-desc {
     overflow: hidden;
   }
 
-  .site-header,
-  .site-header.scrolled {
+  .site-header {
     padding: 10px 0;
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom: 0;
+  }
+
+  .site-header.scrolled {
     background: rgba(6, 7, 10, 0.9);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-subtle);
@@ -870,8 +875,20 @@ body .footer-brand-desc {
 
   .nav-actions { gap: 0; }
   .nav-actions > .theme-toggle-btn,
-  .nav-actions > .btn-garage-hud,
   .nav-actions > .btn-vip-concierge { display: none; }
+
+  .nav-actions > .btn-garage-hud {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    padding: 0;
+    margin-right: 10px;
+    border-color: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+  }
+
+  .nav-actions > .btn-garage-hud > span:not(.garage-count-badge) { display: none; }
 
   .mobile-menu-toggle {
     width: 48px;
@@ -1037,6 +1054,26 @@ body .footer-brand-desc {
   #holo-model-stat { font-size: 0.66rem; }
   .hc-name { font-size: 0.78rem; }
   .hc-hp { font-size: 0.72rem; }
+
+  /* One premium model per swipe, like an automotive product carousel. */
+  .roster-cards-grid {
+    display: flex;
+    gap: 14px;
+    margin: 28px -16px 0;
+    padding: 0 16px 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .roster-cards-grid::-webkit-scrollbar { display: none; }
+  .roster-cards-grid .supercar-card {
+    flex: 0 0 calc(100vw - 46px);
+    scroll-snap-align: center;
+  }
+  .roster-cards-grid .card-glass-shell { min-height: 100%; }
+  .roster-cards-grid .card-image-wrapper { height: 235px; }
 }
 
 /* The 3D surface remains cinematic in light mode, so all of its type needs
@@ -1056,4 +1093,67 @@ body .footer-brand-desc {
 .holodeck-section .section-badge,
 .holodeck-section .holo-auto-orbit-toggle {
   color: var(--accent-cyan);
+}
+
+/* Floating assistance on every viewport, with a larger thumb target on phones. */
+.help-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 16000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.help-fab {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #f8f9fa;
+  color: #14171c;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.help-fab svg { width: 27px; height: 27px; }
+.help-actions { display: grid; gap: 8px; opacity: 0; visibility: hidden; transform: translateY(8px); transition: 0.2s ease; }
+.help-actions.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+.help-actions button {
+  min-width: 104px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 22px;
+  background: #11151b;
+  color: #f5f6f7;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.help-faq-panel {
+  width: min(340px, calc(100vw - 40px));
+  padding: 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: #101319;
+  color: #f5f6f7;
+  box-shadow: 0 22px 70px rgba(0,0,0,0.45);
+}
+.help-panel-close { float: right; border: 0; background: transparent; color: inherit; font-size: 1.6rem; cursor: pointer; }
+.help-panel-kicker { color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; }
+.help-faq-panel h2 { margin: 9px 0 18px; font-family: var(--font-display); font-size: 1.45rem; }
+.help-faq-panel details { padding: 13px 0; border-top: 1px solid var(--hairline); }
+.help-faq-panel summary { cursor: pointer; font-weight: 600; }
+.help-faq-panel p { margin: 10px 0 0; color: #aeb5be; font-size: 0.92rem; line-height: 1.5; }
+
+@media (max-width: 768px) {
+  .help-widget { right: 18px; bottom: max(18px, env(safe-area-inset-bottom)); }
+  .help-fab { width: 62px; height: 62px; }
 }
