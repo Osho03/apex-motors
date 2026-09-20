@@ -134,6 +134,30 @@ select option {
     animation: none !important;
   }
 }
+
+/* Phones use native scrolling and avoid costly compositing while moving. */
+@media (pointer: coarse) {
+  .hero-bg-img,
+  .hero-hud-dock,
+  .card-glass-shell,
+  .studio-workspace-grid,
+  .arena-card-wrapper,
+  .acoustic-chamber-box {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .hero-bg-img {
+    filter: none;
+    will-change: auto;
+  }
+
+  .ticker-track,
+  .roster-cards-grid .supercar-card {
+    animation: none;
+    will-change: auto;
+  }
+}
 /* ====================================================
    VIP CONSULTATION MODAL (Next.js refresh)
 ==================================================== */

@@ -33,7 +33,10 @@ export default function TickerTape() {
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) return;
 
     let x = 0;
     let skew = 0;

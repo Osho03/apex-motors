@@ -11,9 +11,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const REDUCED =
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function shouldReduceMotion() {
+  return (
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+    window.matchMedia("(pointer: coarse)").matches
+  );
+}
 
 /* ----------------------------------------------------
    1. SECTION REVEAL SYSTEM
@@ -21,7 +24,7 @@ const REDUCED =
    cards, and feature blocks.
 ---------------------------------------------------- */
 export function initSectionReveals(): () => void {
-  if (REDUCED) return () => {};
+  if (shouldReduceMotion()) return () => {};
 
   const ctx = gsap.context(() => {
     // Section headers: badge -> title -> desc cascade
@@ -69,7 +72,7 @@ export function initSectionReveals(): () => void {
    and slides words up like editorial kinetic type.
 ---------------------------------------------------- */
 export function initSplitTitles(): () => void {
-  if (REDUCED) return () => {};
+  if (shouldReduceMotion()) return () => {};
 
   const cleanups: Array<() => void> = [];
   const titles = gsap.utils.toArray<HTMLElement>(".section-title");
@@ -123,7 +126,7 @@ export function initSplitTitles(): () => void {
    the user scrolls out of the hero (Awwwards staple).
 ---------------------------------------------------- */
 export function initHeroParallax(): () => void {
-  if (REDUCED) return () => {};
+  if (shouldReduceMotion()) return () => {};
 
   const section = document.getElementById("hero-runway");
   const bg = section?.querySelector<HTMLElement>(".hero-bg-img");

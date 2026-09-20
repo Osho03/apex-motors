@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Lenis as ReactLenis, useLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -54,6 +54,20 @@ function ScrollTriggerSync() {
 }
 
 export default function SmoothScroll({ children }: { children: ReactNode }) {
+  const [useNativeTouchScroll, setUseNativeTouchScroll] = useState(false);
+
+  useEffect(() => {
+    const touchDevice = window.matchMedia("(pointer: coarse)");
+    const update = () => setUseNativeTouchScroll(touchDevice.matches);
+    update();
+    touchDevice.addEventListener("change", update);
+    return () => touchDevice.removeEventListener("change", update);
+  }, []);
+
+  // Native touch scrolling is faster and keeps browser momentum scrolling intact.
+  // Lenis remains enabled for mouse/trackpad devices.
+  if (useNativeTouchScroll) return <>{children}</>;
+
   return (
     <ReactLenis
       root
@@ -62,8 +76,8 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         wheelMultiplier: 1.0,
-        touchMultiplier: 2.0,
-        syncTouch: true,
+        touchMultiplier: 1.0,
+        syncTouch: false,
       }}
     >
       <ScrollTriggerSync />

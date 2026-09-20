@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
-import { HOLO_CONFIGS, ThreeDStage } from "@/lib/holodeck";
+import { HOLO_CONFIGS } from "@/lib/holodeck-config";
+import type { ThreeDStage } from "@/lib/holodeck";
 
 export default function Holodeck() {
   const { heroCarId, setHeroCarId } = useApp();
@@ -10,6 +11,7 @@ export default function Holodeck() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<ThreeDStage | null>(null);
   const [noWebGL, setNoWebGL] = useState(false);
+  const [stageReady, setStageReady] = useState(false);
   const [autoOrbit, setAutoOrbit] = useState(true);
   const lastAppliedRef = useRef<string | null>(null);
 
@@ -17,23 +19,45 @@ export default function Holodeck() {
   const embedSrc = cfg.embed;
 
   useEffect(() => {
-    if (!canvasRef.current || !containerRef.current) return;
+    if (!canvasRef.current || !containerRef.current || embedSrc) return;
 
-    const stage = new ThreeDStage(
+    let stage: ThreeDStage | null = null;
+    let disposed = false;
+
+    void import("@/lib/holodeck").then(({ ThreeDStage }) => {
+      if (disposed || !canvasRef.current || !containerRef.current) return;
+      stage = new ThreeDStage(
       canvasRef.current,
       containerRef.current,
       (id) => setHeroCarId(id)
-    );
-    stage.onNoWebGL = () => setNoWebGL(true);
-    stageRef.current = stage;
-    stage.init();
+      );
+      stage.onNoWebGL = () => setNoWebGL(true);
+      stageRef.current = stage;
+      stage.init();
+    });
 
     return () => {
-      stage.destroy();
+      disposed = true;
+      stage?.destroy();
       stageRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [embedSrc, setHeroCarId]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || stageReady) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setStageReady(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [stageReady]);
 
   // Pause the procedural renderer while a Sketchfab embed is active
   useEffect(() => {
@@ -79,7 +103,7 @@ export default function Holodeck() {
             style={{ display: embedSrc ? "none" : "block" }}
           ></canvas>
 
-          {embedSrc && (
+          {embedSrc && stageReady && (
             <iframe
               src={embedSrc}
               title={cfg.name}
@@ -88,6 +112,7 @@ export default function Holodeck() {
               allow="autoplay; fullscreen; xr-spatial-tracking"
               allowFullScreen
               web-share="true"
+              loading="lazy"
             ></iframe>
           )}
 
