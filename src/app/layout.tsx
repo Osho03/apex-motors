@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Unbounded, Manrope, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import "./legacy/style.css";
@@ -42,6 +42,12 @@ export const metadata: Metadata = {
   title: "APEX MOTORS | The World's Ultimate Hypercar Showcase & Experience",
   description:
     "Explore the world's most extreme hypercars with a realtime 3D holodeck, GSAP scroll-driven exploded anatomy, launch control simulator, bespoke configurator, and realtime engine acoustics.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
