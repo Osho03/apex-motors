@@ -59,24 +59,8 @@ export default function Header() {
 
   return (
     <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
-      <div className="mobile-header-bar">
-        <a href="#hero-runway" className="mobile-brand" aria-label="APEX Motors home">
-          <span>◆</span><strong>APEX</strong>
-        </a>
-        <div className="mobile-header-actions">
-          <button type="button" aria-label="VIP consultation" onClick={() => setVipOpen(true)}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.6 3.3-5.5 7.5-5.5s6.7 1.9 7.5 5.5"/></svg>
-          </button>
-          <button type="button" aria-label="Dream Garage" onClick={() => setDrawerOpen(true)}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            {garageCount > 0 && <i>{garageCount}</i>}
-          </button>
-          <button className={`mobile-bmw-menu ${menuOpen ? "is-open" : ""}`} type="button" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
-            <span></span><span></span><span></span>
-          </button>
-        </div>
-      </div>
       <div className="nav-container">
+        {/* Brand Logo */}
         <a href="#hero-runway" className="brand-logo">
           <span className="emblem-mark">◆</span>
           <span className="brand-text">
@@ -85,36 +69,7 @@ export default function Header() {
           <span className="brand-badge">HYPER-DIVISION</span>
         </a>
 
-        <nav
-          id="mobile-navigation"
-          className={`nav-menu ${menuOpen ? "is-open" : ""}`}
-          aria-label="Primary"
-        >
-          <p className="mobile-menu-label">EXPLORE APEX</p>
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`nav-link ${activeLink === link.href ? "active" : ""}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
-          <div className="mobile-menu-actions">
-            <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>
-              DREAM GARAGE{garageCount > 0 ? ` (${garageCount})` : ""}
-            </button>
-            <button type="button" onClick={() => { setMenuOpen(false); setVipOpen(true); }}>
-              VIP CONSULTATION
-            </button>
-            <div className="mobile-theme-control">
-              <span>DISPLAY</span>
-              <ThemeToggle />
-            </div>
-          </div>
-        </nav>
-
+        {/* Right-side action pill — always hamburger + garage + vip */}
         <div className="nav-actions">
           <ThemeToggle />
 
@@ -151,6 +106,7 @@ export default function Header() {
             <span>VIP CONSULTATION</span>
           </button>
 
+          {/* Hamburger — always visible on all screen sizes */}
           <button
             className={`mobile-menu-toggle ${menuOpen ? "is-open" : ""}`}
             type="button"
@@ -165,7 +121,13 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <nav className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`} aria-label="Mobile navigation">
+
+      {/* Full-screen slide-out nav panel — opens on hamburger click */}
+      <nav
+        id="mobile-navigation"
+        className={`mobile-nav-panel ${menuOpen ? "is-open" : ""}`}
+        aria-label="Primary navigation"
+      >
         <div className="mobile-panel-top">
           <a href="#hero-runway" className="mobile-panel-brand" onClick={() => setMenuOpen(false)}>
             <span>◆</span> APEX MOTORS
@@ -180,7 +142,9 @@ export default function Header() {
             </svg>
           </button>
         </div>
+
         <p className="mobile-panel-caption">SELECT A DESTINATION</p>
+
         <div className="mobile-panel-links">
           {NAV_LINKS.map((link, index) => (
             <a
@@ -198,6 +162,7 @@ export default function Header() {
             </a>
           ))}
         </div>
+
         <div className="mobile-panel-footer">
           <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>
             DREAM GARAGE{garageCount > 0 ? ` · ${garageCount}` : ""}
@@ -206,11 +171,12 @@ export default function Header() {
             VIP CONSULTATION
           </button>
           <div className="mobile-panel-theme">
-            <span>DISPLAY</span>
             <ThemeToggle />
           </div>
         </div>
       </nav>
+
+      {/* Backdrop closes the menu when clicking outside */}
       <button
         className={`mobile-menu-backdrop ${menuOpen ? "is-open" : ""}`}
         type="button"
