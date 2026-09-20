@@ -2088,8 +2088,8 @@ input:checked + .slider:before {
 /* Tachometer Dial */
 .tachometer-gauge-wrapper {
   position: relative;
-  width: 260px;
-  height: 260px;
+  width: min(260px, 74vw);
+  height: min(260px, 74vw);
   margin: 0 auto;
   border-radius: 50%;
   background: radial-gradient(circle, #0e111a 0%, #050608 100%);
@@ -2158,8 +2158,11 @@ input:checked + .slider:before {
 
 .interactive-pedal-btn {
   position: relative;
-  width: 280px;
+  display: block;
+  width: 100%;
+  max-width: 280px;
   height: 110px;
+  margin: 0 auto;
   background: linear-gradient(180deg, #1c202d 0%, #0d0f15 100%);
   border: 2px solid var(--border-subtle);
   border-radius: 12px;

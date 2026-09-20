@@ -100,10 +100,6 @@
     margin: -10px 0;
   }
 
-  .tachometer-instrument-cluster {
-    transform: scale(0.9);
-  }
-
   .garage-drawer {
     width: 100vw;
   }
@@ -252,11 +248,6 @@
     font-size: 0.98rem;
   }
 
-  .holo-canvas-frame {
-    aspect-ratio: 4 / 3;
-    border-radius: 12px;
-  }
-
   .holo-controls-row {
     gap: 14px;
   }
@@ -277,10 +268,6 @@
 
   .arena-selectors-grid {
     gap: 14px;
-  }
-
-  .tachometer-instrument-cluster {
-    transform: scale(0.78);
   }
 
   .vs-emblem {

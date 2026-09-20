@@ -1097,16 +1097,17 @@ body .footer-brand-desc {
     margin: 8px -16px 0;
     padding: 4px 16px 30px;
     overflow-x: auto;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
 
   .roster-cards-grid::-webkit-scrollbar { display: none; }
   .roster-cards-grid .supercar-card {
-    flex: 0 0 calc(100vw - 76px);
+    flex: 0 0 min(calc(100vw - 76px), 460px);
     min-width: 0;
     scroll-snap-align: center;
+    scroll-snap-stop: always;
     animation: none;
   }
   .roster-cards-grid .card-glass-shell { min-height: 0; padding: 20px; }
@@ -1716,9 +1717,6 @@ body .footer-brand-desc {
   .mobile-panel-footer > button { min-height: 48px; padding: 0 10px; border: 1px solid var(--border-subtle); background: transparent; color: #fff; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; }
   .mobile-panel-footer .theme-toggle-btn { width: 48px; height: 48px; }
 
-  /* Mobile fleet = horizontal swipe deck (snap-to-center, one car per pane). */
-  .roster-cards-grid { display: flex; overflow-x: auto; scroll-snap-type: x proximity; }
-  .roster-cards-grid .supercar-card { flex: 0 0 calc(100vw - 76px); scroll-snap-align: center; }
   .help-widget { right: 20px; bottom: 20px; }
   .help-fab { width: 76px; height: 76px; box-shadow: 0 12px 38px rgba(0,0,0,.42); }
   .help-fab svg { width: 33px; height: 33px; }
@@ -2070,4 +2068,146 @@ button {
 .garage-items-list,
 .help-panel-body {
   overscroll-behavior: contain;
+}
+
+/* ====================================================
+   MOBILE RESPONSIVENESS AUDIT (final cascade)
+   Loaded last so these win. Desktop (> 767px) is untouched.
+   Fixes fixed-size desktop leaks and horizontal overflow
+   on 320-430px phones. Safe-area insets are respected.
+==================================================== */
+@media (max-width: 767px) {
+  /* --- Header: brand + pill must fit without horizontal overflow --- */
+  .site-header {
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: 10px;
+  }
+  .brand-logo {
+    min-width: 0;
+    gap: 8px;
+  }
+  .brand-text {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* --- Hero: responsive headline, no text overflow, safe-area top --- */
+  .hero-content-wrapper {
+    padding-top: calc(88px + env(safe-area-inset-top));
+  }
+  body .hero-headline {
+    font-size: clamp(2.05rem, 10.5vw, 3.6rem);
+  }
+  .hero-top-status {
+    min-width: 0;
+  }
+  .live-status-pill {
+    gap: 8px;
+    letter-spacing: 0.14em;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .live-status-pill .live-dot {
+    flex: none;
+  }
+  .hero-price-row {
+    flex-wrap: wrap;
+  }
+
+  /* --- Telemetry Arena: breathe inside small phones, wrap long race text --- */
+  .arena-card-wrapper {
+    padding: clamp(18px, 6vw, 32px);
+  }
+  .compare-car-box {
+    padding: 16px 14px;
+  }
+  .telemetry-bar-row {
+    padding: 10px 12px;
+  }
+  .drag-race-simulator {
+    padding: 18px;
+  }
+  .race-header {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .race-title,
+  .race-banner {
+    min-width: 0;
+  }
+  .btn-start-race {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  /* --- Acoustic Chamber: responsive gauges, engine selector, touch pedal --- */
+  .acoustic-chamber-box {
+    padding: clamp(18px, 6vw, 40px);
+  }
+  .chamber-engine-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chamber-engine-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    width: auto;
+  }
+  .shift-lights-bar {
+    gap: 5px;
+  }
+  .shift-light-led {
+    width: clamp(14px, 4.4vw, 22px);
+    height: 8px;
+  }
+  .interactive-pedal-btn {
+    height: 96px;
+  }
+  .pedal-title {
+    font-size: 0.84rem;
+  }
+  .chamber-stop-btn {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+
+  /* --- Footer: single-column with readable spacing, no overflow --- */
+  .footer-container {
+    padding-inline: 20px;
+  }
+  .footer-top {
+    gap: 30px;
+  }
+  .footer-brand-desc {
+    max-width: none;
+  }
+  .footer-legal-tags {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .footer-bottom {
+    gap: 10px;
+  }
+}
+
+/* --- Mobile menu footer: 3-across needs ~366px, so below 430px the
+   rightmost theme toggle is pushed off the right edge. Stack it. --- */
+@media (max-width: 430px) {
+  .mobile-panel-footer {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .mobile-panel-footer > button,
+  .mobile-panel-footer .theme-toggle-btn {
+    width: 100%;
+  }
 }
