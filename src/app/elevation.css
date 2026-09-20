@@ -1476,6 +1476,61 @@ body .footer-brand-desc {
 }
 
 /* ====================================================
+   HERO ACTION PILL — Uiverse phone style (faxriddin20)
+   Black rounded container; round icon buttons (garage, VIP,
+   burger) with a lift on hover. Replaces the bare icon row.
+   The search button was dropped in favour of the PhyoTP
+   three-line burger, which is what opens the mobile nav.
+==================================================== */
+/* ====================================================
+   HERO ACTION PILL — Uiverse pill (faxriddin20) retargeted
+   onto Header's REAL classes (.nav-actions / .mobile-header-actions /
+   .btn-vip-concierge) — NOT the dead .button-container block,
+   which bound to classes that don't exist and rendered nothing.
+   Black pill, round lift-on-hover icon buttons, readable.
+==================================================== */
+.nav-actions,
+.mobile-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  background-color: #000;
+  min-height: 44px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+}
+.nav-actions > button,
+.mobile-header-actions > button {
+  outline: 0 !important;
+  border: 0 !important;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform ease-in-out 0.3s, color ease-in-out 0.3s;
+}
+.nav-actions > button:hover,
+.mobile-header-actions > button:hover {
+  transform: translateY(-3px);
+  color: var(--accent-cyan);
+}
+
+@media (max-width: 767px) {
+  .nav-actions, .mobile-header-actions { display: flex; align-items: center; justify-content: space-around; background-color: #000; border: 1px solid var(--border-subtle); border-radius: 12px; box-shadow: 0 12px 34px rgba(0,0,0,.4); }
+  .nav-actions > button, .mobile-header-actions > button { outline: 0 !important; border: 0 !important; width: 42px; height: 42px; border-radius: 50%; background-color: transparent; color: #fff; transition: transform ease-in-out .3s, color ease-in-out .3s; cursor: pointer; }
+  .nav-actions > button:hover, .mobile-header-actions > button:hover { transform: translateY(-3px); color: var(--accent-cyan); }
+}
+
+/* ====================================================
    MOBILE READABILITY PUMP (Final cascade: wins everything above)
    The site shipped with tiny 0.56–0.92rem accents on small screens.
    This raises base + accents so every word is comfortably legible
