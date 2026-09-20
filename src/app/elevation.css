@@ -1078,7 +1078,7 @@ body .footer-brand-desc {
   .hc-name { font-size: 0.78rem; }
   .hc-hp { font-size: 0.72rem; }
 
-  /* Horizontal swipe deck: one machine per pane, big imagery, snap-to-center. */
+  /* Filters: horizontally scrollable row, unaffected by the roster grid. */
   .roster-filters-bar {
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -1090,26 +1090,6 @@ body .footer-brand-desc {
     -webkit-overflow-scrolling: touch;
   }
   .roster-filters-bar::-webkit-scrollbar { display: none; }
-
-  .roster-cards-grid {
-    display: flex;
-    gap: 18px;
-    margin: 8px -16px 0;
-    padding: 4px 16px 30px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .roster-cards-grid::-webkit-scrollbar { display: none; }
-  .roster-cards-grid .supercar-card {
-    flex: 0 0 min(calc(100vw - 76px), 460px);
-    min-width: 0;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    animation: none;
-  }
   .roster-cards-grid .card-glass-shell { min-height: 0; padding: 20px; }
   .roster-cards-grid .card-image-wrapper { height: clamp(210px, 46vw, 300px); margin-bottom: 18px; }
   .roster-cards-grid .card-car-img {
@@ -2209,5 +2189,47 @@ button {
   .mobile-panel-footer > button,
   .mobile-panel-footer .theme-toggle-btn {
     width: 100%;
+  }
+}
+
+/* ====================================================
+   FLEET / ROSTER — authoritative mobile single-column.
+   Replaces the old horizontal swipe deck. Appended at the
+   very end of the cascade so it wins at max-width: 767px
+   regardless of anything above. Desktop (> 767px) untouched.
+==================================================== */
+@media (max-width: 767px) {
+  .roster-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 18px;
+    margin: 32px 0 12px;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .roster-cards-grid .supercar-card {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    flex: none;
+  }
+  .roster-cards-grid .card-image-wrapper {
+    height: clamp(200px, 52vw, 300px);
+    margin-bottom: 16px;
+  }
+  .roster-cards-grid .card-glass-shell {
+    min-height: 0;
+    padding: 18px;
+  }
+  .roster-cards-grid .card-specs-matrix {
+    margin-bottom: 16px;
+  }
+  .roster-cards-grid .card-footer-action {
+    gap: 12px;
+  }
+  .roster-cards-grid .btn-card-explore {
+    min-height: 48px;
   }
 }
