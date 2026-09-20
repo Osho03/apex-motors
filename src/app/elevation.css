@@ -698,6 +698,7 @@ body.preloader-lock {
 ==================================================== */
 body.apex-light-theme .hero-section,
 body.apex-light-theme .site-footer,
+body.apex-light-theme .holodeck-section,
 body.apex-light-theme .holo-canvas-frame {
   --text-primary: #f5f6f7;
   --text-secondary: #a0a6ae;
@@ -895,8 +896,9 @@ body .footer-brand-desc {
     transition: transform 0.2s ease;
   }
 
-  .mobile-menu-toggle.is-open span:first-child { transform: translateY(3.5px) rotate(45deg); }
-  .mobile-menu-toggle.is-open span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+  .mobile-menu-toggle.is-open span:first-child { transform: translateY(7px) rotate(45deg); }
+  .mobile-menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+  .mobile-menu-toggle.is-open span:last-child { transform: translateY(-7px) rotate(-45deg); }
 
   .nav-menu {
     position: fixed;
@@ -915,10 +917,16 @@ body .footer-brand-desc {
     border-left: 1px solid var(--border-subtle);
     box-shadow: -24px 0 60px rgba(0, 0, 0, 0.42);
     transform: translateX(105%);
+    visibility: hidden;
+    pointer-events: none;
     transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .nav-menu.is-open { transform: translateX(0); }
+  .nav-menu.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
 
   .mobile-menu-label {
     display: block;
@@ -1021,4 +1029,31 @@ body .footer-brand-desc {
   body .roster-filter-pill { min-height: 42px; font-size: 0.82rem; }
   body .btn-primary-glow,
   body .btn-secondary-outline { min-height: 48px; font-size: 0.88rem; }
+
+  .holodeck-section { padding: 72px 0; }
+  .holodeck-section .section-header { margin-bottom: 30px; }
+  .holo-hud-chip { font-size: 0.66rem; }
+  #holo-model-name { font-size: 0.72rem; }
+  #holo-model-stat { font-size: 0.66rem; }
+  .hc-name { font-size: 0.78rem; }
+  .hc-hp { font-size: 0.72rem; }
+}
+
+/* The 3D surface remains cinematic in light mode, so all of its type needs
+   the same high-contrast palette as the viewport. */
+.holodeck-section .section-container {
+  position: relative;
+  z-index: 2;
+}
+
+.holodeck-section .section-title,
+.holodeck-section .section-desc,
+.holodeck-section .section-badge,
+.holodeck-section .holo-auto-orbit-toggle {
+  color: var(--text-primary);
+}
+
+.holodeck-section .section-badge,
+.holodeck-section .holo-auto-orbit-toggle {
+  color: var(--accent-cyan);
 }
