@@ -582,7 +582,7 @@ body.preloader-lock {
   color: #f5f6f7;
 }
 .preloader-stat-lbl {
-  font-size: 0.56rem;
+  font-size: 0.66rem;
   letter-spacing: 0.28em;
   color: rgba(245, 246, 247, 0.4);
 }
@@ -1879,7 +1879,7 @@ body .footer-brand-desc {
     background: transparent;
     color: rgba(255,255,255,.82);
     font-family: var(--font-mono);
-    font-size: .56rem;
+    font-size: .7rem;
     letter-spacing: .05em;
     line-height: 1;
     text-decoration: none;
@@ -1887,7 +1887,7 @@ body .footer-brand-desc {
   }
   .mobile-dock-button svg { width: 22px; height: 22px; }
   .mobile-dock-button:active { background: rgba(93,191,202,.16); color: var(--accent-cyan); transform: translateY(1px); }
-  .mobile-dock-count { position: absolute; top: 4px; right: 6px; display: grid; min-width: 16px; height: 16px; padding: 0 4px; place-items: center; border-radius: 99px; background: var(--accent-red); color: white; font-size: .55rem; }
+  .mobile-dock-count { position: absolute; top: 4px; right: 6px; display: grid; min-width: 16px; height: 16px; padding: 0 4px; place-items: center; border-radius: 99px; background: var(--accent-red); color: white; font-size: .62rem; }
 
   .mobile-search-sheet { position: fixed; inset: 0; z-index: 1300; display: block; pointer-events: none; visibility: hidden; }
   .mobile-search-sheet.is-open { pointer-events: auto; visibility: visible; }
@@ -2000,14 +2000,17 @@ button {
     padding-top: calc(88px + env(safe-area-inset-top));
   }
   body .hero-headline {
-    font-size: clamp(2.4rem, 11vw, 3.8rem);
+    font-size: clamp(2.47rem, 11.6vw, 2.82rem);
     line-height: 1.02;
   }
   body .hero-slogan {
-    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    font-size: clamp(1.25rem, 6vw, 1.75rem);
   }
-  .hero-subtext {
-    font-size: 1.05rem;
+  body .hero-subtext {
+    font-size: 0.94rem;
+  }
+  body .hero-price-display {
+    font-size: 1.4rem;
   }
   .hero-cta-row {
     width: 100%;
@@ -2016,11 +2019,15 @@ button {
   .hero-cta-row a {
     flex: 1 1 auto;
     min-width: 0;
-    padding: 14px 18px;
+    min-height: 48px;
+    padding: 14px 20px;
   }
   .hud-telemetry-cluster {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
+  }
+  .hud-stat-label {
+    font-size: 0.7rem;
   }
   .hud-stat-val {
     font-size: 1.05rem;
@@ -2029,9 +2036,12 @@ button {
     flex-wrap: wrap;
   }
 
-  /* Decorative status text is hidden on phones — the headline,
-     HUD stats and the price carry the message. */
+  /* Decorative status + "FROM" caption hidden on phones — the headline,
+     HUD stats and the price value carry the message. */
   .hero-top-status {
+    display: none;
+  }
+  body .price-caption {
     display: none;
   }
 
@@ -2064,7 +2074,7 @@ button {
     width: 100% !important;
     max-width: 100% !important;
     overflow: visible !important;
-    gap: 20px;
+    gap: 24px;
     margin: 32px 0 12px;
     padding: 0;
     scroll-snap-type: none !important;
@@ -2084,7 +2094,7 @@ button {
   }
   .roster-cards-grid .card-image-wrapper {
     width: 100%;
-    height: clamp(220px, 60vw, 280px);
+    height: clamp(230px, 60vw, 280px);
     margin-bottom: 16px;
   }
   .roster-cards-grid .card-car-img {
@@ -2095,11 +2105,65 @@ button {
   .roster-cards-grid .card-specs-matrix {
     margin-bottom: 16px;
   }
+  .roster-cards-grid .spec-lbl {
+    font-size: 0.7rem;
+  }
+  .roster-cards-grid .spec-val {
+    font-size: 0.95rem;
+  }
   .roster-cards-grid .card-footer-action {
     gap: 12px;
   }
   .roster-cards-grid .btn-card-explore {
     flex: 1;
+  }
+
+  /* ---------- BUTTONS & CONTROLS: 48px-class touch targets ---------- */
+  .btn-primary-glow,
+  .btn-secondary-outline,
+  .btn-start-race,
+  .btn-card-explore,
+  .chamber-stop-btn,
+  .hero-cta-row a,
+  .modal-actions-row .btn-primary-glow,
+  .modal-actions-row .btn-secondary-outline,
+  .vip-form button[type="submit"].btn-primary-glow {
+    min-height: 48px;
+  }
+  .btn-primary-glow,
+  .btn-secondary-outline {
+    padding-block: 13px 13px;
+    padding-inline: 20px 20px;
+  }
+  .roster-filter-pill {
+    min-height: 48px;
+  }
+  .btn-garage-hud,
+  .theme-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ---------- SECTION RHYTHM (64–96px vertical, 16px gutters) ---------- */
+  section,
+  .holodeck-section {
+    padding: 72px 0;
+  }
+  .section-header {
+    margin-bottom: 34px;
+  }
+  body .section-desc {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+  .concierge-banner-section {
+    padding: 72px 0;
+  }
+  .concierge-card {
+    padding: 36px 20px;
+  }
+  .concierge-text {
+    font-size: 1rem;
   }
 
   /* ---------- ARENA: stacked comparison ---------- */
@@ -2263,7 +2327,6 @@ button {
     flex: none;
   }
   .roster-filter-pill {
-    min-height: 44px;
     font-size: 0.82rem;
   }
   .garage-count-badge {
@@ -2309,6 +2372,21 @@ button {
   }
   .help-actions {
     font-size: 0.88rem;
+  }
+
+  /* Floating chat button: clearly visible, touch-friendly, clear of
+     page content. Overrides the multiple legacy 768px help-fab sizes. */
+  .help-widget {
+    right: 16px;
+    bottom: 20px;
+  }
+  .help-fab {
+    width: 56px;
+    height: 56px;
+  }
+  .help-fab .fab-chat {
+    width: 26px;
+    height: 26px;
   }
 
   /* Mobile menu footer: stack below 430px so the theme toggle
