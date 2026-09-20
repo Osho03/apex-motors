@@ -16,6 +16,7 @@ export default function Header() {
   const { garageCount, setDrawerOpen, setVipOpen } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("#hero-runway");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -23,6 +24,19 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.body.classList.add("mobile-menu-open");
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.classList.remove("mobile-menu-open");
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const sections = NAV_LINKS.map((l) =>
@@ -54,16 +68,34 @@ export default function Header() {
           <span className="brand-badge">HYPER-DIVISION</span>
         </a>
 
-        <nav className="nav-menu" aria-label="Primary">
+        <nav
+          id="mobile-navigation"
+          className={`nav-menu ${menuOpen ? "is-open" : ""}`}
+          aria-label="Primary"
+        >
+          <p className="mobile-menu-label">EXPLORE APEX</p>
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={`nav-link ${activeLink === link.href ? "active" : ""}`}
+              onClick={() => setMenuOpen(false)}
             >
               {link.label}
             </a>
           ))}
+          <div className="mobile-menu-actions">
+            <button type="button" onClick={() => { setMenuOpen(false); setDrawerOpen(true); }}>
+              DREAM GARAGE{garageCount > 0 ? ` (${garageCount})` : ""}
+            </button>
+            <button type="button" onClick={() => { setMenuOpen(false); setVipOpen(true); }}>
+              VIP CONSULTATION
+            </button>
+            <div className="mobile-theme-control">
+              <span>DISPLAY</span>
+              <ThemeToggle />
+            </div>
+          </div>
         </nav>
 
         <div className="nav-actions">
@@ -101,8 +133,27 @@ export default function Header() {
           >
             <span>VIP CONSULTATION</span>
           </button>
+
+          <button
+            className={`mobile-menu-toggle ${menuOpen ? "is-open" : ""}`}
+            type="button"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
+      <button
+        className={`mobile-menu-backdrop ${menuOpen ? "is-open" : ""}`}
+        type="button"
+        aria-label="Close navigation menu"
+        tabIndex={menuOpen ? 0 : -1}
+        onClick={() => setMenuOpen(false)}
+      />
     </header>
   );
 }
